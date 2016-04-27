@@ -1,0 +1,90 @@
+﻿/* #desk specific classes */
+
+#desk {
+	width:calc(100% - 2px);
+	margin:0;
+}
+#desk table {
+	width:100%;
+}
+
+.dr { /* desk row, vertical spacing */
+	padding:0 1rem;
+	margin:1rem 0rem;
+}
+.dr.backup {
+	margin-top:-1.5rem;
+}
+
+/* form-like layout of box */
+
+.bigfield {
+	border: 1px solid black;
+	border-radius:1rem;
+	text-align:center;
+	font-size:1.5em;
+	background-color:white;
+	padding:.5rem;
+	line-height:1.735;  /* normal for devanagari */
+}
+#sketchcanvas {
+	position:relative;
+}
+.sketchfont {
+	font-size: 5rem;
+}
+
+/* stacks, with drag and drop */
+
+.stackexpander {
+	margin-top:-.8rem;
+	margin-bottom:-.1rem;
+}
+
+.stack {
+	width:calc((100% - 5rem - 8px)/4); /* 5 margins, 8 borders */
+	min-height:3rem;
+	height:10rem;
+	max-height:12rem;
+	overflow-x:hidden;
+	overflow-y:auto;
+	white-space:nowrap;
+	margin-left:0;
+	text-align:left;
+}
+.stack:first-child {
+	margin-left:1rem;
+}
+ct { /* stack title */
+	font-weight:bold;
+	display:block;
+	padding-left:.2rem;
+}
+cd { /* card */
+	display:block;
+	padding-left:.2rem;
+}
+cd.highlight {
+	background-color:dodgerblue;
+}
+cd.dragging {
+	position:absolute;
+	background-color:gold;
+}
+cx { /* drop insert position between each card, not used */
+	display:block;
+	xborder-bottom:1px solid green;
+	margin:0 .5rem;
+}
+
+/* settings popup dialog */
+
+form#settings {
+	xwidth:11rem;
+	position:absolute;
+	top:0;
+	right:0;
+}
+form#settings input[type=number] {
+	width:3rem;
+}

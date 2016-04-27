@@ -1,0 +1,46 @@
+﻿#debug-left {
+	position:absolute;
+	xborder:1px solid black;
+	padding:10px;
+	left:0px;
+}
+.debug-left-col {
+	float:left;
+}
+#debug-right {
+	position:absolute;
+	xborder:1px solid black;
+	padding:10px;
+	right:0px;
+}
+.debug-right-col {
+	float:right;
+}
+.debug-vspace {
+	height:350px;
+}
+.debug-input {
+	margin:1px 0px;
+	width:50px;
+}
+
+#settingsform { display:table; }
+#settingsform div { display:table-row; }
+#settingsform label { display:table-cell; }
+#settingsform input { display:table-cell; }
+
+#ua-internals {
+	position:absolute;
+	z-index:1000;
+	background-color:white;
+}
+.uablock {
+	border:1px solid gray;
+	padding:1em;
+	max-width:20em;
+	width:15em;
+	max-height:10em;
+	overflow-x:scroll;
+	overflow-y:scroll;
+	vertical-align:top;
+}

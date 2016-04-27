@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv=Content-Type content='text/html; charset=UTF-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+		<title>Flash</title>
+		<style>[hidden] {display:none ! important;}</style>
+
+		<!-- submodules -->
+		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
+		<link  href='minimal/minimal.css' rel='stylesheet' type='text/css'></link>
+		<script src='minimal/minimal.js'></script>
+		<script src='jslib/utils.js'></script>
+		<script src='jslib/dragger.js'></script>
+		<script src='jslib/observer.js'></script>
+		<script src='jslib/note.js'></script>
+		<script src='jslib/browserhistory.js'></script>
+		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
+		<script src='icon/icon.js'></script>
+		<script src='icon/lib/menu.js'></script>
+
+		<!-- app -->
+		<link  href='css/flash.css' rel='stylesheet' type='text/css'></link>
+		<link  href='css/desk.css' rel='stylesheet' type='text/css'></link>
+		<link  href='minimal/theme/google.css' rel='stylesheet' type='text/css'></link>
+		<script src='js/flash.js'></script>
+		<script src='js/coach.js'></script>
+		<script src='js/program.js'></script>
+		<script src='js/desk.js'></script>
+		<script src='js/str.js'></script>
+		<script src='js/internals.js'></script>
+		<script src='js/card.js'></script>
+		<script src='js/stack.js'></script>
+		
+		<!-- where to put this -->
+		<script src='canvas/sketch.js'></script>
+
+		</head>
+	<body>
+		<header class='fixed'>
+			<icon class='bit' type='draw' name='menu' open='leftnav-modeless'></icon>
+			<div class='bit hdr' id='hdrtitle'>Flash</div>
+		</header>
+		
+		<main id='content'>
+			<div id='home'>
+				<h2>Smart Flash Cards</h2>
+				<p>flash cards, rote learning, memorization, brain training, repetition, practice</p>
+				<h3>Choose a subject</h3>
+				<ul>
+					<li><button class='anchor' nav='greekalphabet'   >Greek Alphabet</button></li>
+					<li><button class='anchor' nav='arithmetic'      >Arithmetic</button></li>
+					<li><button class='anchor' nav='nationalcapitals'>National Capitals</button></li>
+					<li><button class='anchor' nav='custom'          >Custom</button></li>
+				</ul>
+				<!--
+				<div class='panel wid10 grn'><h3>Greek Alphabet</h3><p>Α α alpha, Β β beta, Γ γ gamma, Δ δ delta, Ε ε epsilon, Ζ ζ zeta, Η η eta, Θ θ theta, Κ κ kappa</p></div>
+				<div class='panel wid10 blu'><h3>Mathematics   </h3><p>1+2=3, 4+3=7, 2+3=5, 4*2=8, 4*9=36, 12/3=4, 8-2=6, 11-4=7, 36/6=6</p></div>
+				<div class='panel wid10 ylo'><h3>Capital Cities</h3><p>China, Beijing; India, New Delhi; Indonesia, Jakarta; Brazil, Brasília; Pakistan, Islamabad;</p></div>
+				<div class='panel wid10 red'><h3>Custom</h3><p>Enter your own questions and answers.</p></div>
+				<div class='panel wid10 red'><h3>Periodic Table</h3><p>Chemistry, the periodic table of elements.</p></div>
+				<div class='panel wid10 grn'><h3>Anatomy       </h3><p>Medicine, using imagery.  Database of images of body parts.  Skeletal.  Muscular.  Organs.  Etc.</p></div>
+				<div class='panel wid10 blu'><h3>Statutes      </h3><p>Law.</p></div>
+				<div class='panel wid10 ylo'><h3>Formulae      </h3><p>Math.</p></div>
+				<button id='testbtn'>Test</button>
+				-->
+			
+				<h3>How It Works</h3>
+				<p>
+					Serving questions and answers to you,<br/>
+					starting with just a few,<br/>
+					introducing new cards gradually,<br/>
+					remembering what you have mastered and what you are working on.<br/>
+				</p>
+
+				<h3>Developers</h3>
+				<ul>
+					<li>Call from your own website, with your own custom set of flash cards.</li>
+				</ul>
+				<p>OR</p>
+				<ul>
+					<li>Embed the Flash Desk into your own website.</li>
+				</ul>
+
+			</div>
+			<div hidden id='subject'>
+				<h1 id='pageheader'></h1>
+				<p><button id='practice'>Practice</button></p>
+				<div select class='panel list blu'>
+					<h3>Select Cards</h3>
+					<table id='pagetable'></table>
+				</div>
+			</div>
+			<div hidden id='custom'>
+				<h3>Custom</h3>
+				<p>Enter your own pairs of question and answer.</p>
+				<p><textarea id='custominput'></textarea></p>
+			</div>
+			<div hidden id='deskcontainer'></div>
+			<div hidden id='internals-container'></div>
+		</main>
+
+		<!---- modeless dialogs ----------------------------------------->
+		<aside>
+			<nav initially hidden class='panel popup leftnav blu' id='leftnav-modeless'>
+				<div close='leftnav-modeless' class='closex'>&times;</div>
+				<h3>Go To...</h3>
+				<p><a close='leftnav-modeless' href='#appearance'>Library</a></p>
+				<p><a close='leftnav-modeless' href='#behaviour'>Mathematics</a></p>
+				<p><a close='leftnav-modeless' href='#topics'>Greek Alphabet</a></p>
+				<p><a close='leftnav-modeless' href='#alternatives'>Capital Cities</a></p>
+			</nav>
+
+			<div id='internals'>  <!-- for developers -->
+				<div id='debug-left'>
+					<div class='debug-left-col'>
+						<fieldset>
+							Direction: <input type='text' id='currentDir' value='xx' class='debug-input' readonly disabled />
+							<div id='debug-settings-btn' canvas='Gear' class='right'></div>
+							N session: <input type='number' id='numQuestions' value='0' class='debug-input' readonly disabled /><br/>
+							<input id='debug-autoplay-cb' type='checkbox' />
+							<label for='debug-autoplay-cb'>AutoPlay</label>
+						</fieldset>
+						<fieldset id='settingsform'>
+							<legend>Settings</legend>
+							<div>
+								<label>Max Work:</label>
+								<input type='number' id='maxSizeWork' value='0' class='debug-input' />
+							</div>
+							<div>	
+								<label>Max Review:</label>
+								<input type='number' id='maxSizeReview' value='0' class='debug-input' />
+							</div>
+							<div>	
+								<label>Review Pct:</label>
+								<input type='number' id='reviewPct' value='0' class='debug-input' />
+							</div>
+							<div>	
+								<label>Primed Pct:</label>
+								<input type='number' id='primedPct' value='0' class='debug-input' />
+							</div>
+							<div>	
+								<label>Work Req:</label>
+								<input type='number' id='workRequirement' value='0' class='debug-input' />
+							</div>
+							<div>	
+								<label>Review Req:</label>
+								<input type='number' id='reviewRequirement' value='0' class='debug-input' />
+							</div>
+							<input type='button' id='reapplyDefaults' value='Reapply Defaults' />
+						</fieldset>
+						<fieldset>
+							<legend id='debugqaw-hdr'>Work/qa/42</legend>
+							<div id='debugqaw'></div>
+						</fieldset>
+						<fieldset>
+							<legend id='debugqar-hdr'>Review/qa/10</legend>
+							<div id='debugqar'></div>
+						</fieldset>
+					</div>
+					<div class='debug-left-col'>
+						<fieldset>
+							<legend id='debugqam-hdr'>Mastered</legend>
+							<div id='debugqam'></div>
+						</fieldset>
+						<fieldset>
+							<legend id='debugqap-hdr'>Primed</legend>
+							<div id='debugqap'></div>
+						</fieldset>
+						<fieldset>
+							<legend id='debugqau-hdr'>Untried</legend>
+							<div id='debugqau'></div>
+						</fieldset>
+					</div>
+				</div>
+				<div id='debug-right'>
+					<div class='debug-right-col'>
+						<fieldset>
+							<legend id='debugaqw-hdr'>Work/qa/42</legend>
+							<div id='debugaqw'></div>
+						</fieldset>
+						<fieldset>
+							<legend id='debugaqr-hdr'>Review/qa/10</legend>
+							<div id='debugaqr'></div>
+						</fieldset>
+					</div>
+					<div class='debug-right-col'>
+						<fieldset>
+							<legend id='debugaqm-hdr'>Mastered</legend>
+							<div id='debugaqm'></div>
+						</fieldset>
+						<fieldset>
+							<legend id='debugaqp-hdr'>Primed</legend>
+							<div id='debugaqp'></div>
+						</fieldset>
+						<fieldset>
+							<legend id='debugaqu-hdr'>Untried</legend>
+							<div id='debugaqu'></div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+
+			
+		</aside>
+
+		<!---- modal dialog container ----------------------------->
+
+		<footer>
+			<a class='ftr' target='_blank' href='http://github.com/hagstrand/flash'>github</a>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv=Content-Type content='text/html; charset=UTF-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+		<title>Desk Test</title>
+		<style>[hidden] {display:none ! important;}</style>
+
+		<!-- submodules -->
+		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
+		<link  href='minimal/minimal.css' rel='stylesheet' type='text/css'></link>
+		<script src='minimal/minimal.js'></script>
+		<link  href='minimal/theme/google.css' rel='stylesheet' type='text/css'></link>
+		<script src='jslib/utils.js'></script>
+		<script src='jslib/dragger.js'></script>
+		<script src='jslib/observer.js'></script>
+		<script src='jslib/note.js'></script>
+		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
+		<script src='icon/icon.js'></script>
+		<script src='icon/lib/menu.js'></script>
+		<script src='icon/lib/gear.js'></script>
+		<script src='icon/lib/pencil.js'></script>
+		<script src='icon/lib/speaker.js'></script>
+		<script src='icon/lib/triangledown.js'></script>
+
+		<script src='canvas/sketch.js'></script>
+
+		<!-- app -->
+		<link  href='css/desk.css' rel='stylesheet' type='text/css'></link>
+		<script src='js/desk.js'></script>
+		<script src='js/card.js'></script>
+
+		<script>
+			var flash = {};
+			window.addEventListener('load', function() {
+				flash.observer = new Observer();
+				flash.desk = new Desk();
+				flash.desk.setup($('deskcontainer'), flash.observer);
+
+			//	flash.icon = new Icon();
+			//	flash.icon.attachAll();
+			//	flash.icon.drawAll();
+
+
+				$('test-program-ready').addEventListener('click', function(event) {
+					flash.observer.publish(new Note('program-ready', 'tester', {
+						name:'Spanish',
+						dir:'qa'
+					}));
+				}, false);
+				$('test-question').addEventListener('click', function(event) {
+					var c = new Card({i:8430,n:1894,a:'lotus', t:'ka-ma-la', q:'कमल'});
+					flash.observer.publish(new Note('question', 'tester', {
+						card:c,
+					}));
+				}, false);
+				$('test-change-direction').addEventListener('click', function(event) {
+					flash.observer.publish(new Note('changedirection-complete', 'tester', {}));
+				}, false);
+			});
+		</script>
+
+	</head>
+	<body>
+		<div id='deskcontainer'></div>
+		<input type='button' value='program ready' id='test-program-ready'/>
+		<input type='button' value='change direction' id='test-change-direction'/>
+		<input type='button' value='question' id='test-question'/>
+	</body>
+</html>

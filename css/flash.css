@@ -1,0 +1,10 @@
+#deskcontainer	 {
+	min-width:20rem;
+	max-width:60rem;
+	margin:2rem auto 4rem auto;
+}
+
+textarea#custominput {
+	width:20rem;
+	height:20rem;
+}
