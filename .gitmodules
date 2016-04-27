@@ -1,0 +1,12 @@
+[submodule "normalize.css"]
+	path = normalize.css
+	url = https://github.com/necolas/normalize.css
+[submodule "minimal"]
+	path = minimal
+	url = https://github.com/hagstrand/minimal
+[submodule "icon"]
+	path = icon
+	url = https://github.com/hagstrand/icon
+[submodule "jslib"]
+	path = jslib
+	url = https://github.com/hagstrand/jslib
