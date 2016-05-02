@@ -1,10 +1,15 @@
 // अथ योगानुशासनम्॥१॥
-/*
+/**
 	class Desk
+	@constructor
 	manages the Desk area of the screen
 	subscribes to 'question', publishes 'answer'
 */
 Desk = function() {
+	// is singleton
+	if (Desk._instance) return Desk._instance;
+	else Desk._instance = this;
+
 	this.container = null;
 	this.observer = null;
 	this.card = null;
@@ -30,14 +35,12 @@ Desk.html = ""+
 			"<table>"+
 				"<tr>"+
 					"<td id='program-name' class='title tleft'>$4</td>"+
-					"<td class='tcenter'>"+
+					"<td class='tright'>"+
 						"<div id='dirbuttons'>"+
 							"<input hidden id='dir-qa-btn' type='button' class='anchor' value='$1' />"+
 							"<input hidden id='dir-aq-btn' type='button' class='anchor' value='$2' />"+
 						"</div>"+
-					"</td>"+
-					"<td class='tright'>"+
-						"<icon class=big name='gear' show='settings'></icon>"+
+						"<icon type='draw' name='gear' open='settings'></icon>"+
 					"</td>"+
 				"</tr>"+
 			"</table>"+
@@ -79,32 +82,32 @@ Desk.html = ""+
 		"</div>"+
 		"<h5 id=stackexpander expand='stacks' class='tleft expander'>Stacks</h5>"+
 		"<div id='stacks'>"+
-			"<div draglist droplist class='stack panel grn' id='stacku'><h3>Untried</h3></div>"+
-			"<div draglist droplist class='stack panel grn' id='stackw'><h3>Work</h3></div>"+
-			"<div draglist droplist class='stack panel grn' id='stackr'><h3>Review</h3></div>"+
-			"<div draglist droplist class='stack panel grn' id='stackm'><h3>Mastered</h3></div>"+
+			"<div draglist droplist class='stack panel list grn' id='stacku'><h3>Untried</h3></div>"+
+			"<div draglist drop class='stack panel list grn' id='stackw'><h3>Work</h3><ul></ul></div>"+
+			"<div draglist drop class='stack panel list grn' id='stackr'><h3>Review</h3><ul></ul></div>"+
+			"<div draglist drop class='stack panel list grn' id='stackm'><h3>Mastered</h3><ul></ul></div>"+
 		"</div>"+
-		"<form hidden id='settings' class='panel popup'>"+
-			"<icon name='xding' class='fright' hide='settings'></icon>"+
-			"<h3>Algorithm Factors</h3>"+
-			"<table>"+
-				"<tr><td colspan='2'><input type='checkbox' id='isAutoDir' checked /><label for='isAutoDir'>isAutoDir</label></td></tr>"+
-				"<tr><td>autoDirNth</td><td class='tright'><input type='number' id='autoDirNth'   value='0' /></td></tr>"+
-				"<tr><td colspan='2'><input type='checkbox' id='isAutoChoose' checked /><label for='isAutoChoose'>isAutoChoose</label></td></tr>"+
-				"<tr><td>choosePctReview</td><td class='tright'><input type='number' id='choosePctReview' value='0' /></td></tr>"+
-				"<tr><td colspan='2'><input type='checkbox' id='isAutoPull' checked /><label for='isAutoPull'>isAutoPull</label></td></tr>"+
-				"<tr><td>minAvgPctWork</td><td class='tright'><input type='number' id='minAvgPctWork' value='0' /></td></tr>"+
-				"<tr><td>minSizeWork</td><td class='tright'><input type='number' id='minSizeWork' value='0' /></td></tr>"+
-				"<tr><td>maxSizeWork</td><td class='tright'><input type='number' id='maxSizeWork' value='0' /></td></tr>"+
-				"<tr><td>maxSizeReview</td><td class='tright'><input type='number' id='maxSizeReview' value='0' /></td></tr>"+
-				"<tr><td colspan='2'><input type='checkbox' id='isAutoPromote' checked /><label for='isAutoPromote'>isAutoPromote</label></td></tr>"+
-				"<tr><td>promotePctWork  </td><td class='tright'><input type='number' id='promotePctWork' value='0' /></td></tr>"+
-				"<tr><td>promoteCntWork  </td><td class='tright'><input type='number' id='promoteCntWork' value='0' /></td></tr>"+
-				"<tr><td>promotePctReview</td><td class='tright'><input type='number' id='promotePctReview' value='0' /></td></tr>"+
-				"<tr><td>promoteCntReview</td><td class='tright'><input type='number' id='promoteCntReview' value='0' /></td></tr>"+
-			"</table>"+
-		"</form>"+
-	"</div>";
+	"</div>"+
+	"<form initially hidden id='settings' class='panel popup dropdown blu'>"+
+		"<div close='settings' class='closex'>&times;</div>"+
+		"<h3>Settings</h3>"+
+		"<table>"+
+			"<tr><td colspan='2'><input type='checkbox' id='isAutoDir' checked /><label for='isAutoDir'>isAutoDir</label></td></tr>"+
+			"<tr><td>autoDirNth</td><td class='tright'><input type='number' id='autoDirNth'   value='0' /></td></tr>"+
+			"<tr><td colspan='2'><input type='checkbox' id='isAutoChoose' checked /><label for='isAutoChoose'>isAutoChoose</label></td></tr>"+
+			"<tr><td>choosePctReview</td><td class='tright'><input type='number' id='choosePctReview' value='0' /></td></tr>"+
+			"<tr><td colspan='2'><input type='checkbox' id='isAutoPull' checked /><label for='isAutoPull'>isAutoPull</label></td></tr>"+
+			"<tr><td>minAvgPctWork</td><td class='tright'><input type='number' id='minAvgPctWork' value='0' /></td></tr>"+
+			"<tr><td>minSizeWork</td><td class='tright'><input type='number' id='minSizeWork' value='0' /></td></tr>"+
+			"<tr><td>maxSizeWork</td><td class='tright'><input type='number' id='maxSizeWork' value='0' /></td></tr>"+
+			"<tr><td>maxSizeReview</td><td class='tright'><input type='number' id='maxSizeReview' value='0' /></td></tr>"+
+			"<tr><td colspan='2'><input type='checkbox' id='isAutoPromote' checked /><label for='isAutoPromote'>isAutoPromote</label></td></tr>"+
+			"<tr><td>promotePctWork  </td><td class='tright'><input type='number' id='promotePctWork' value='0' /></td></tr>"+
+			"<tr><td>promoteCntWork  </td><td class='tright'><input type='number' id='promoteCntWork' value='0' /></td></tr>"+
+			"<tr><td>promotePctReview</td><td class='tright'><input type='number' id='promotePctReview' value='0' /></td></tr>"+
+			"<tr><td>promoteCntReview</td><td class='tright'><input type='number' id='promoteCntReview' value='0' /></td></tr>"+
+		"</table>"+
+	"</form>";
 
 Desk.prototype = {
 	setup: function(container, observer) {
@@ -117,6 +120,9 @@ Desk.prototype = {
 		this.minimal = new Minimal();
 		this.minimal.attachAll(this.container);
 
+		(new Icon()).attachAll(this.container);
+		(new Icon()).drawAll();
+
 		this.sketchMarks = new Sketch($('sketchcanvas'), {hasGrid:true, gridSize:20});
 		this.attachDomEventHandlers();
 		this.attachFlashNoteHandlers();
@@ -124,7 +130,7 @@ Desk.prototype = {
 
 	attachDomEventHandlers: function() {
 		var self = this;
-		$('settings').addEventListener('show', function(e) {
+		$('settings').addEventListener('open', function(e) {
 			self.populateSettingsForm();
 		}, false);
 
@@ -169,6 +175,19 @@ Desk.prototype = {
 				flash.coach.setting[e.target.id] = e.target.value;
 			});
 		}
+		
+		// detect ctrl-q
+		window.addEventListener('keyup', function(event) {
+			if (event.keyCode == 80) {  // p
+				if (self.isAutoPlay) {
+					self.observer.publish(new Note('autoplay-cancelled', 'desk', {}));
+				}
+				else {
+					self.observer.publish(new Note('autoplay-request', 'desk', {}));
+				}
+			}
+		}, false);
+
 	},
 
 	attachFlashNoteHandlers: function() {
@@ -308,7 +327,8 @@ Desk.prototype = {
 	autoScore: function() {
 		// simulated probability of answering correctly increases with every asking of the question
 		var probability = [.30, .40, .50, .60, .70, .80, .90];
-		var probIndex = Math.min(this.card.getAcnt(), probability.length-1);
+		var dir = (this.reverse) ? 'aq' : 'qa';
+		var probIndex = Math.min(this.card.getAcnt(dir), probability.length-1);
 		var probabilityTrue = probability[probIndex];
 		var r = Math.random()
 		var answer = (r < probabilityTrue);
@@ -321,8 +341,8 @@ Desk.prototype = {
 
 		// get the new size
 		var s = getComputedStyle($('answer'));
-		var w = parseInt(s.paddingLeft) + parseInt(s.paddingRight) + parseInt(s.width);
-		var h = parseInt(s.paddingTop) + parseInt(s.paddingBottom) + parseInt(s.height);
+		var w = parseInt(s.paddingLeft,10) + parseInt(s.paddingRight,10) + parseInt(s.width,10);
+		var h = parseInt(s.paddingTop,10) + parseInt(s.paddingBottom,10) + parseInt(s.height,10);
 
 		// size the canvas to match
 		var c = $('sketchcanvas');
@@ -354,14 +374,14 @@ Desk.prototype = {
 	},
 
 	onProgramReady: function(note) {
-		$('program-name').innerHTML = note.payload.features.name;
+		$('program-name').innerHTML = note.payload.features.title;
 		if (!note.payload.features.reversible) {
 			hide('dirbuttons');
 		}
 		this.onDirectionChange(note);
 	},
 
-	// Program is handling stacks. Desk is displaying stacks.  Correct?
+	// Program is handling stacks. Desk is displaying stacks.
 	refreshStacks: function(note) {
 		// insert the html into each stack
 		var state;
@@ -369,7 +389,7 @@ Desk.prototype = {
 			state = Card.allStates[i];
 			if (state == 'p') 
 				continue;
-			if (note.payload['stacks']) {
+			if (note.payload.stacks) {
 				$('stack'+state).innerHTML = note.payload.stacks[state];
 			}
 		}
@@ -378,6 +398,7 @@ Desk.prototype = {
 		this.minimal.attachAll($('stacks'));
 	},
 
+	// Coach is handling settings. Desk is displaying settings.
 	populateSettingsForm: function() {
 		var setting;
 		for (var i=0; i<this.cbfields.length; i++) {

@@ -1,10 +1,19 @@
 #deskcontainer	 {
 	min-width:20rem;
 	max-width:60rem;
-	margin:2rem auto 4rem auto;
+	margin:1rem 1rem 4rem 1rem;
 }
 
 textarea#custominput {
 	width:20rem;
 	height:20rem;
+}
+
+.voyclogo {
+	height:1em;
+	width:3em;
+	color:navy;  /* voycblue */
+}
+.voyclogo.ftr {
+	margin-top:.6em;
 }

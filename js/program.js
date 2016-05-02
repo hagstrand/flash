@@ -1,12 +1,17 @@
 // अथ योगानुशासनम्॥१॥
 /**
 	class Program
+	@constructor
 	singleton
  	represents one language program
 	contains the Cards
 	contains the Stacks of Cards
 **/
 function Program() {
+	// is singleton
+	if (Program._instance) return Program._instance;
+	else Program._instance = this;
+
 	// program features
 	this.features = {
 		name       : '',    // string
@@ -41,22 +46,24 @@ Program.prototype.setup = function(observer) {
 	});
 }
 
+// receive external data
 Program.prototype.loadData = function(data) {
-	this.features.name       = data.name || '';
-	this.features.reversible = data.reversible || false;
-	this.features.dir        = data.dir || 'qa';
-	this.features.language   = data.language || false;
-	this.features.sketch     = data.sketch || false;
-	this.features.translit   = data.translit || false;
-	this.features.audio      = data.audio || false;
-	this.features.db         = data.db || false;
+	this.features.name       = data['name'] || '';
+	this.features.title      = data['title'] || '';
+	this.features.reversible = data['reversible'] || false;
+	this.features.dir        = data['dir'] || 'qa';
+	this.features.language   = data['language'] || false;
+	this.features.sketch     = data['sketch'] || false;
+	this.features.translit   = data['translit'] || false;
+	this.features.audio      = data['audio'] || false;
+	this.features.db         = data['db'] || false;
 
 	this.initStacks();
 
 	// add the newly received cards to the deck and to the stacks
 	var card, id, dir;
-	for (var i=0; i<data.cards.length; i++) {
-		card = new Card(data.cards[i]);
+	for (var i=0; i<data['cards'].length; i++) {
+		card = new Card(data['cards'][i]);
 		id = card.id;
 		if (!this.cards[id]) {
 			this.cards[id] = card;

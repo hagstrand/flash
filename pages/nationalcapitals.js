@@ -1,6 +1,6 @@
-var subject = 'nationalcapitals';
-subjects[subject] = {
-name:'National Capitals',
+var data = {
+name:'nationalcapitals',
+title:'National Capitals',
 reversible:true,
 language:false,
 sketch:false,
@@ -236,4 +236,4 @@ cards: [
 {q:'Nauru', a:'Yaren'},
 ]
 }
-onscriptloaded(subject);
+onScriptLoaded(data);

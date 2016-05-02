@@ -1,37 +1,31 @@
 // अथ योगानुशासनम्॥१॥
-/*
- * class Card
- * contains the scoring for one question
-
-renaming
-	this.state => reading.state
-	this.aCnt => reading.asked
-	this.cCnt => reading.correct
+/**
+	class Card
+	@constructor
+	Contains the scoring for one question
  */
  
-Card.id = 1;
-Card.seq = 1; 
- 
 function Card(quest) {
-	this.id = quest.i || Card.id++;      // id
-	this.seq = quest.n || Card.seq++;     // sequence number
-	this.foreign = quest.q; // question text (foreign language)
-	this.native = quest.a;  // answer text (native language)
-	this.translit = quest.t;
-	this.audiourl = quest.audiourl;
+	// The input quest is external data.
+	this.id = quest['i'] || Card.id++;      // id
+	this.seq = quest['n'] || Card.seq++;     // sequence number
+	this.foreign = quest['q']; // question text (foreign language)
+	this.native = quest['a'];  // answer text (native language)
+	this.translit = quest['t'];
+	this.audiourl = quest['audiourl'];
 
-	this.qa = {
-		state: quest.qas || 'u',    // state
-		aCnt: quest.qaa || 0,  // count asked
-		cCnt: quest.qac || 0,  // count correct
+	this['qa'] = {
+		state: quest['qas'] || 'u',    // state
+		aCnt: quest['qaa'] || 0,  // count asked
+		cCnt: quest['qac'] || 0,  // count correct
 		pct: 0,					// percent correct
 		recent: null,      // The 5 most recent answers.  A 5-byte array.  Each byte is empty, 0, or 1.
 		z: 0,              // nSession of last time this question was displayed
 	};
-	this.aq = {
-		state: quest.aqs || 'u',
-		aCnt: quest.aqa || 0,
-		cCnt: quest.aqc || 0,
+	this['aq'] = {
+		state: quest['aqs'] || 'u',
+		aCnt: quest['aqa'] || 0,
+		cCnt: quest['aqc'] || 0,
 		pct: 0,
 		recent: null,
 		z:0
@@ -42,6 +36,9 @@ function Card(quest) {
 	this.clearRecent('aq');
 }
 
+Card.id = 1;
+Card.seq = 1; 
+ 
 Card.maxRecent = 5;
 
 Card.mastered = 'm';
@@ -130,11 +127,11 @@ Card.prototype = {
 		return this.seq + " " + this.foreign.substr(0,10) + " " + this[dir].cCnt + "/" + this[dir].aCnt + " " + this[dir].state + " " + this.io + " " + this[dir].z + " " + this[dir].recent;
 	},
 	toJson: function() {
-		return '{"i":'+this.id+',"qas":"'+this.qa.state+'","qaa":'+this.qa.aCnt+',"qac":'+this.qa.cCnt+',"aqs":"'+this.aq.state+'","aqa":'+this.aq.aCnt+',"aqc":'+this.aq.cCnt+'}';
+		return '{"i":'+this.id+',"qas":"'+this['qa'].state+'","qaa":'+this['qa'].aCnt+',"qac":'+this['qa'].cCnt+',"aqs":"'+this['aq'].state+'","aqa":'+this['aq'].aCnt+',"aqc":'+this['aq'].cCnt+'}';
 	}, 
 
 	drawAnalytics: function() {
-		return this.qa.state + '/' + this.qa.cCnt + '/' + this.qa.aCnt + ' : ' + this.aq.state + '/' + this.aq.cCnt + '/' + this.aq.aCnt;
+		return this['qa'].state + '/' + this['qa'].cCnt + '/' + this['qa'].aCnt + ' : ' + this['aq'].state + '/' + this['aq'].cCnt + '/' + this['aq'].aCnt;
 	},
 
 	drawStack: function(dir) {

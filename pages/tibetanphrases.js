@@ -1,6 +1,6 @@
-var subject = 'tibetanphrases';
-subjects[subject] = {
-	name: "Tibetan Phrases",
+var data = {
+	name: 'tibetanphrases';
+	title: "Tibetan Phrases",
 	reversible:true,
 	language:true,
 	sketch:true,
@@ -21,4 +21,4 @@ subjects[subject] = {
 		{ q:"", t:"ah-cha-la", a:"excuse me madam (literal:`elder sister)" },
 	]
 };
-onscriptloaded(subject);
+onScriptLoaded(data);

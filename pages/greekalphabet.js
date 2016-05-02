@@ -1,6 +1,6 @@
-var subject = 'greekalphabet';
-subjects[subject] = {
-	name: "Greek Alphabet",
+var data = {
+	name: 'greekalphabet',
+	title: 'Greek Alphabet',
 	reversible:true,
 	language:false,
 	sketch:false,
@@ -35,4 +35,4 @@ subjects[subject] = {
 		{q:'Ω ω', a:'omega'},
 	]
 }
-onscriptloaded(subject);
+onScriptLoaded(data);

@@ -6,7 +6,7 @@
 		<title>Flash</title>
 		<style>[hidden] {display:none ! important;}</style>
 
-		<!-- submodules -->
+<?php if (false) { ?>
 		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
 		<link  href='minimal/minimal.css' rel='stylesheet' type='text/css'></link>
 		<script src='minimal/minimal.js'></script>
@@ -15,31 +15,36 @@
 		<script src='jslib/observer.js'></script>
 		<script src='jslib/note.js'></script>
 		<script src='jslib/browserhistory.js'></script>
+		<script src='jslib/sketch.js'></script>
+		<script src='jslib/voyclogo.js'></script>
 		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
 		<script src='icon/icon.js'></script>
 		<script src='icon/lib/menu.js'></script>
-
-		<!-- app -->
+		<script src='icon/lib/gear.js'></script>
+		<link  href='css/theme.css' rel='stylesheet' type='text/css'></link>
 		<link  href='css/flash.css' rel='stylesheet' type='text/css'></link>
 		<link  href='css/desk.css' rel='stylesheet' type='text/css'></link>
-		<link  href='minimal/theme/google.css' rel='stylesheet' type='text/css'></link>
 		<script src='js/flash.js'></script>
 		<script src='js/coach.js'></script>
 		<script src='js/program.js'></script>
 		<script src='js/desk.js'></script>
 		<script src='js/str.js'></script>
-		<script src='js/internals.js'></script>
 		<script src='js/card.js'></script>
 		<script src='js/stack.js'></script>
-		
-		<!-- where to put this -->
-		<script src='canvas/sketch.js'></script>
+<?php } else { ?>
+<!--<remove>
+		<script src='min.js'             ></script>
+		<link rel='stylesheet' href='min.css' type='text/css' />
+<remove>-->
+<?php } ?>
 
-		</head>
+	</head>
 	<body>
 		<header class='fixed'>
-			<icon class='bit' type='draw' name='menu' open='leftnav-modeless'></icon>
-			<div class='bit hdr' id='hdrtitle'>Flash</div>
+			<div class='group'>
+				<icon class='bit' type='draw' name='menu' open='leftnav'></icon>
+				<div class='hdr bit' id='hdrtitle'>Flash</div>
+			</div>
 		</header>
 		
 		<main id='content'>
@@ -62,7 +67,6 @@
 				<div class='panel wid10 grn'><h3>Anatomy       </h3><p>Medicine, using imagery.  Database of images of body parts.  Skeletal.  Muscular.  Organs.  Etc.</p></div>
 				<div class='panel wid10 blu'><h3>Statutes      </h3><p>Law.</p></div>
 				<div class='panel wid10 ylo'><h3>Formulae      </h3><p>Math.</p></div>
-				<button id='testbtn'>Test</button>
 				-->
 			
 				<h3>How It Works</h3>
@@ -92,121 +96,28 @@
 				</div>
 			</div>
 			<div hidden id='custom'>
-				<h3>Custom</h3>
+				<h1>Custom</h1>
 				<p>Enter your own pairs of question and answer.</p>
 				<p><textarea id='custominput'></textarea></p>
 			</div>
 			<div hidden id='deskcontainer'></div>
-			<div hidden id='internals-container'></div>
 		</main>
 
 		<!---- modeless dialogs ----------------------------------------->
 		<aside>
-			<nav initially hidden class='panel popup leftnav blu' id='leftnav-modeless'>
-				<div close='leftnav-modeless' class='closex'>&times;</div>
+			<nav initially hidden class='panel popup leftnav blu' id='leftnav'>
+				<div close='leftnav' class='closex'>&times;</div>
 				<h3>Go To...</h3>
-				<p><a close='leftnav-modeless' href='#appearance'>Library</a></p>
-				<p><a close='leftnav-modeless' href='#behaviour'>Mathematics</a></p>
-				<p><a close='leftnav-modeless' href='#topics'>Greek Alphabet</a></p>
-				<p><a close='leftnav-modeless' href='#alternatives'>Capital Cities</a></p>
+				<p><button class='anchor' close='leftnav' nav=''                >Home</button></p>
+				<p><button class='anchor' close='leftnav' nav='arithmetic'      >Arithmetic</button></p>
+				<p><button class='anchor' close='leftnav' nav='greekalphabet'   >Greek Alphabet</button></p>
+				<p><button class='anchor' close='leftnav' nav='nationalcapitals'>National Capitals</button></p>
+				<p><button class='anchor' close='leftnav' nav='custom'          >Custom</button></p>
 			</nav>
-
-			<div id='internals'>  <!-- for developers -->
-				<div id='debug-left'>
-					<div class='debug-left-col'>
-						<fieldset>
-							Direction: <input type='text' id='currentDir' value='xx' class='debug-input' readonly disabled />
-							<div id='debug-settings-btn' canvas='Gear' class='right'></div>
-							N session: <input type='number' id='numQuestions' value='0' class='debug-input' readonly disabled /><br/>
-							<input id='debug-autoplay-cb' type='checkbox' />
-							<label for='debug-autoplay-cb'>AutoPlay</label>
-						</fieldset>
-						<fieldset id='settingsform'>
-							<legend>Settings</legend>
-							<div>
-								<label>Max Work:</label>
-								<input type='number' id='maxSizeWork' value='0' class='debug-input' />
-							</div>
-							<div>	
-								<label>Max Review:</label>
-								<input type='number' id='maxSizeReview' value='0' class='debug-input' />
-							</div>
-							<div>	
-								<label>Review Pct:</label>
-								<input type='number' id='reviewPct' value='0' class='debug-input' />
-							</div>
-							<div>	
-								<label>Primed Pct:</label>
-								<input type='number' id='primedPct' value='0' class='debug-input' />
-							</div>
-							<div>	
-								<label>Work Req:</label>
-								<input type='number' id='workRequirement' value='0' class='debug-input' />
-							</div>
-							<div>	
-								<label>Review Req:</label>
-								<input type='number' id='reviewRequirement' value='0' class='debug-input' />
-							</div>
-							<input type='button' id='reapplyDefaults' value='Reapply Defaults' />
-						</fieldset>
-						<fieldset>
-							<legend id='debugqaw-hdr'>Work/qa/42</legend>
-							<div id='debugqaw'></div>
-						</fieldset>
-						<fieldset>
-							<legend id='debugqar-hdr'>Review/qa/10</legend>
-							<div id='debugqar'></div>
-						</fieldset>
-					</div>
-					<div class='debug-left-col'>
-						<fieldset>
-							<legend id='debugqam-hdr'>Mastered</legend>
-							<div id='debugqam'></div>
-						</fieldset>
-						<fieldset>
-							<legend id='debugqap-hdr'>Primed</legend>
-							<div id='debugqap'></div>
-						</fieldset>
-						<fieldset>
-							<legend id='debugqau-hdr'>Untried</legend>
-							<div id='debugqau'></div>
-						</fieldset>
-					</div>
-				</div>
-				<div id='debug-right'>
-					<div class='debug-right-col'>
-						<fieldset>
-							<legend id='debugaqw-hdr'>Work/qa/42</legend>
-							<div id='debugaqw'></div>
-						</fieldset>
-						<fieldset>
-							<legend id='debugaqr-hdr'>Review/qa/10</legend>
-							<div id='debugaqr'></div>
-						</fieldset>
-					</div>
-					<div class='debug-right-col'>
-						<fieldset>
-							<legend id='debugaqm-hdr'>Mastered</legend>
-							<div id='debugaqm'></div>
-						</fieldset>
-						<fieldset>
-							<legend id='debugaqp-hdr'>Primed</legend>
-							<div id='debugaqp'></div>
-						</fieldset>
-						<fieldset>
-							<legend id='debugaqu-hdr'>Untried</legend>
-							<div id='debugaqu'></div>
-						</fieldset>
-					</div>
-				</div>
-			</div>
-
-			
 		</aside>
 
-		<!---- modal dialog container ----------------------------->
-
 		<footer>
+			<a class='ftr voyclogo' target='_blank' href='http://voyc.com'>voyc</a>
 			<a class='ftr' target='_blank' href='http://github.com/hagstrand/flash'>github</a>
 		</footer>
 	</body>

@@ -1,6 +1,6 @@
-var subject = 'arithmetic';
-subjects[subject] = {
-	name: "Arithmetic",
+var data = {
+	name: "arithmetic",
+	title: "Arithmetic",
 	reversible:false,
 	language:false,
 	sketch:false,
@@ -155,4 +155,4 @@ subjects[subject] = {
 		{q:'12 x 12', a:'144'},
 	]
 }
-onscriptloaded(subject);
+onScriptLoaded(data);

@@ -1,6 +1,7 @@
 // अथ योगानुशासनम्॥१॥
 /**
 	class Stack
+	@constructor
 	contains an array of Card ids
 	(a card can live in multiple Stacks)
 **/
@@ -153,7 +154,7 @@ Stack.prototype = {
 	},
 
 	drawStack: function() {
-		var titles = {w:'Work',u:'Untried',r:'Review',m:'Mastered'};
+		var titles = {'w':'Work','u':'Untried','r':'Review','m':'Mastered'};
 		var title = titles[this.state];
 		var s = '<h3>' + title + ' ' + this.avgPct + '</h3><ul>';
 		var id,card;

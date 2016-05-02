@@ -1,5 +1,15 @@
 // अथ योगानुशासनम्॥१॥
+/**
+	class Str
+	@constructor
+	singleton
+	Contains and manages display strings.
+*/
 function Str() {
+	// is singleton
+	if (Str._instance) return Str._instance;
+	else Str._instance = this;
+
 	this.strings = {
 		'complete': 'Success!',
 		'program-options': 'Program Options',

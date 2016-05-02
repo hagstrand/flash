@@ -1,1 +1,4 @@
-# Nothing to ignore 
+# Ignore build outputs
+min.js
+min.css
+index.php
