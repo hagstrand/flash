@@ -1,11 +1,9 @@
 // अथ योगानुशासनम्॥१॥
 
+/** @const */
+voyc.flash = {};
 
-// global variable
-var flash = null;
-
-// global constants
-var title = 'Flash';
+/*
 var flashc = {
 	primed: 'p',
 	untried: 'u',
@@ -15,6 +13,47 @@ var flashc = {
 	qa: 'qa',  // normal
 	aq: 'aq',  // reverse
 };
+*/
+
+/** @enum 
+ used only in Program
+ */
+Dir = {
+	FORWARD: 'qa', // reading/listening (q->a)
+	REVERSE: 'aq', // writing/speakng (a->q)
+	LISTEN: 'a', // with audio only, no text
+	SPEAK: 's', // with speech recognition
+	WRITE: 'd' // with sketch and hand-writing recognition
+};
+
+/** @enum used only in Coach */
+State = {
+	UNTRIED: 'u',
+	WORK: 'w',
+	REVIEW: 'r',
+	MASTERED: 'm',
+	PRIMED: 'p'
+};
+
+/** @enum used only in voyc.flash.strings below */ 
+Action = {
+	PROGRAM_READY: 'b',
+	QUESTION: 'q',
+	ANSWER: 'a',
+	STACKS_CHANGED: 'i',
+	CHANGEDIRECTION_REQUEST: 'e',
+	CHANGEDIRECTION_COMPLETE: 'f',
+	AUTOPLAY_REQUEST: 'g',
+	AUTOPLAY_CANCELLED: 'h'
+}
+
+/** @enum used only in voyc.flash.strings below */
+Actor = {
+	COACH: 'c',
+	DESK: 'd',
+	PROGRAM: 'p',
+	FLASH: 'f'
+}
 
 /**
 	class Flash
@@ -22,58 +61,73 @@ var flashc = {
 	singleton
 	Creates all objects, runs setup methods, publishes 'setup-complete'.
 **/
-
-function Flash() {
+voyc.Flash = function() {
 	// is singleton
-	if (Flash._instance) return Flash._instance;
-	else Flash._instance = this;
+	if (voyc.Flash._instance) return voyc.Flash._instance;
+	else voyc.Flash._instance = this;
 	
+	this.observer = null;
 	this.cache = [];
 }
 
-Flash.prototype.load = function() {
+voyc.Flash.prototype.load = function() {
 	console.log('onload');
 
-	flash.coach = new Coach();
-	flash.program = new Program();  // : creates Sets of Cards
+	voyc.flash.title = 'Flash';
+	voyc.flash.strings = {};
+	voyc.flash.strings[Action.PROGRAM_READY] = 'program-ready',
+	voyc.flash.strings[Action.QUESTION] = 'question',
+	voyc.flash.strings[Action.ANSWER] = 'answer',
+	voyc.flash.strings[Action.STACKS_CHANGED] = 'stacks-changed`',
+	voyc.flash.strings[Action.CHANGEDIRECTION_REQUEST] = 'changedirection-request',
+	voyc.flash.strings[Action.CHANGEDIRECTION_COMPLETE] = 'changedirection-complete',
+	voyc.flash.strings[Action.AUTOPLAY_REQUEST] = 'autoplay-request',
+	voyc.flash.strings[Action.AUTOPLAY_CANCELLED] = 'autoplay-cancelled'
+	voyc.flash.strings[Actor.COACH] = 'coach',
+	voyc.flash.strings[Actor.DESK] = 'desk',
+	voyc.flash.strings[Actor.PROGRAM] = 'program',
+	voyc.flash.strings[Actor.FLASH] = 'flash'
+
+	voyc.flash.coach = new Coach();
+	voyc.flash.program = new Program();  // : creates Sets of Cards
 
 	// view
-	flash.desk = new Desk();
-	flash.str = new Str();
+	voyc.flash.desk = new Desk();
+	Str.strings = voyc.flash.Strings;
 
 	// controller
-	var observer = flash.observer = new Observer();
+	this.observer = voyc.flash.observer = new voyc.Observer();
 
 	// run setups
-	flash.desk.setup($('deskcontainer'), observer);  // newer version of view
-	flash.coach.setup(observer);
-	flash.program.setup(observer);
+	voyc.flash.desk.setup(voyc.$('deskcontainer'), this.observer);  // newer version of view
+	voyc.flash.coach.setup(this.observer);
+	voyc.flash.program.setup(this.observer);
 
 	// attach nav buttons
 	var elems = document.querySelectorAll('[nav]');
 	for (var i=0; i<elems.length; i++) {
 		elems[i].addEventListener('click', function(event) {
 			var eid = event.currentTarget.getAttribute('nav');
-			(new BrowserHistory()).nav(eid);
+			(new voyc.BrowserHistory()).nav(eid);
 		}, false);
 	}
 
 	// initialize browserhistory 
 	// url: http://flash.voyc.com?subject=pageid
-	new BrowserHistory('subject', function(pageid) {
-		flash.onNav(pageid);
+	new voyc.BrowserHistory('subject', function(pageid) {
+		voyc.flash.onNav(pageid);
 	});
 
 	// initialize form with default custom cards
-	$('custominput').value = 'hola, hello;\nadios, goodbye;\nlapiz, pencil;\nestudiar, study;\nla madre, the mother;\nel padre, the father;';
+	voyc.$('custominput').value = 'hola, hello;\nadios, goodbye;\nlapiz, pencil;\nestudiar, study;\nla madre, the mother;\nel padre, the father;';
 
 	// attach practice button handler
-	$('practice').addEventListener('click', function(evt) {
+	voyc.$('practice').addEventListener('click', function(evt) {
 		practicePage(evt);
 	});
 
 	// ready to start
-	flash.observer.publish(new Note('setup-complete', 'flash', {}));
+	this.observer.publish(new voyc.Note('setup-complete', 'flash', {}));
 }
 
 /**
@@ -82,17 +136,17 @@ Flash.prototype.load = function() {
 		2. when the user clicks the back button (window.onpopstate)
 		3. on startup.  pageid may be included in a bookmarked url.
 */
-Flash.prototype.onNav = function(pageid) {
+voyc.Flash.prototype.onNav = function(pageid) {
 
 	// home page
 	if (!pageid) {
-		document.title = title;
+		document.title = voyc.flash.title;
 		this.showPage('home');
 	}
 
 	// custom data, not yet implemented
 	else if (pageid == 'custom') {
-		document.title = title + ' Custom';
+		document.title = voyc.flash.title + ' Custom';
 		this.showPage(pageid);
 	}
 	
@@ -110,17 +164,17 @@ Flash.prototype.onNav = function(pageid) {
 	}
 }
 
-Flash.prototype.loadScript = function(pageid) {
+voyc.Flash.prototype.loadScript = function(pageid) {
 	if (pageid in this.cache) {
 		window['onScriptLoaded'](this.cache[pageid]);
 	}
 	else {
 		var scripturl = 'pages/' + pageid + '.js';
-		appendScript(scripturl);
+		voyc.appendScript(scripturl);
 	}
 }
 
-Flash.prototype.showPage = function(pageid) {
+voyc.Flash.prototype.showPage = function(pageid) {
 	var pageids = [
 		'home',
 		'subject',
@@ -129,18 +183,18 @@ Flash.prototype.showPage = function(pageid) {
 	];
 	for (var i=0; i<pageids.length; i++) {
 		if (pageids[i] == pageid) {
-			show(pageids[i]);
+			voyc.show(pageids[i]);
 		}
 		else {
-			hide(pageids[i]);
+			voyc.hide(pageids[i]);
 		}
 	}
 }
 
 // global onload handler
 window.addEventListener('load', function(evt) {
-	flash = new Flash();
-	flash.load();
+	voyc.flash = new voyc.Flash();
+	voyc.flash.load();
 });
 
 /** 
@@ -177,16 +231,16 @@ window.addEventListener('load', function(evt) {
 // handle incoming postmessage from external window
 window.addEventListener("message", function(e) {
 	console.log('postmessage event received from ' + e.origin);
-	loadData(e.data);
-	(new BrowserHistory()).nav(e.data['name']);
+	voyc.flash.program.loadData(e.data);
+	(new voyc.BrowserHistory()).nav(e.data['name']);
 }, false);
 
 // handle incoming data from pages/*.js loaded dynamically
 window['onScriptLoaded'] = function(data) {
-	flash.program.loadData(data);
-	document.title = title + ' ' + data['title'];
+	voyc.flash.program.loadData(data);
+	document.title = voyc.flash.title + ' ' + data['title'];
 	var pageid = data['name'];
-	if (!(pageid in flash.cache)) {
-		flash.cache[pageid] = data;
+	if (!(pageid in voyc.flash.cache)) {
+		voyc.flash.cache[pageid] = data;
 	}
 }

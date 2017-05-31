@@ -1,0 +1,854 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv=Content-Type content='text/html;charset=UTF-8'>
+<title>Thai</title>
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+<style>[hidden] {display:none ! important;}</style>
+<script>
+/*
+Diacritics to indicate pitch
+‸	Caret	Falling, does not display in font Courier New
+ˇ	Caron	Rising
+`	Grave accent	Low
+´	Acute accent	High
+ʉ	U Bar	Say U while smiling
+*/
+
+var voyc = {};
+voyc.conversation = {
+	name: "conversation",
+	title: "Conversation",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'Sawat-dee` krab.', a:'Hello.'},
+		{q:'Sabaai-dee mai´?', a:'Your peace of mind is good, yes?'},
+		{q:'Sabaai-dee krab', a:'Peace of mind is good.  Yes.'},
+		{q:'Laeo´ kun la`?', a:'Then how about you?'},
+		{q:'laeo´', a:'then (at beginning); or already (later)'},
+		{q:'Pom rian paa-saaˇ Thai laeo´ wan-niiˇ', a:'I study Thai language already today.'},
+		{q:'Kun chʉʉ arai, krab?', a:'Your name what?'},
+		{q:'Pom chʉʉ John, krab.', a:'My name John.'},
+		{q:'Laeo´ kun la`?', a:'Then how about you?'},
+		{q:'Yindee tiidai‸ rujak´, krab.', a:'Pleased (to have the opportunity) to know you.'},
+		{q:'Pomˇ mai‸ ruuˇ, krab.', a:'I do not know.'},
+		{q:'Kun maa jaak` tiinaiˇ, krab?', a:'You come from where?'},
+		{q:'maa', a:'come'},
+		{q:'jaak`', a:'from'},
+		{q:'tiinaiˇ', a:'where (at which place)'},
+		{q:'tii', a:'at'},
+		{q:'naiˇ', a:'which'},
+		{q:'tiinaiˇ', a:'where'},
+		{q:'Pom maa jaak` Amay rigaa, krab?', a:'I come from America?'},
+
+		{q:'Dton-nii´ kun pak´ tii-naiˇ, krab?', a:'Now you stay where?'},
+		{q:'dton-nii´', a:'now'},
+		{q:'pak´', a:'stay'},
+		{q:'yuu`', a:'stay'},
+		{q:'Dton-nii´ pom yuu` tii‸ Hillside 3 Condo, krab.', a:'Now I stay at Hillside 3 Condo'},
+		{q:'tii‸', a:'at'},
+		{q:'Kun chorb‸ tiinii‸ mai´, krab?', a:'You like it here, yes?'},
+		{q:'chorb‸', a:'like'},
+		{q:'tiinii‸', a:'here'},
+		{q:'Krab, chorb‸ tiinii‸ maak‸, krab?', a:'Yes, like it here a lot, krab.'},
+		{q:'maak‸', a:'a lot'},
+
+		{q:'dii tii dtii dton-nii´', a:'now'},
+		{q:'bii pii bpii bplaa', a:'fish'},
+		{q:'nii gii ngii ngern', a:'money'},
+	
+		{q:'Ao gaafae mai´?', a:'? Will you go to coffee? , Have you had coffee yet?'},
+		{q:'paa-saaˇ', a:'language'},
+		{q:'paa-saaˇ Thai', a:'Thai language'},
+		{q:'paa-saaˇ Ang-grit', a:'English language'},
+		
+	]
+}
+voyc.whatwhenwhere = {
+	name: "whatwhenwhere",
+	title: "What When Where",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'Kun ja kgin arai?', a:'You will eat what?'},
+		{q:'Kun ja kgin tii-naiˇ?', a:'You will eat where?'},
+		{q:'Kun ja kgin mua-rai?', a:'You will eat when?'},
+		{q:'Kun ja kgin gii-mong?', a:'You will eat what time?'},
+		{q:'Kun ja kgin gab krai?', a:'You will eat with whom?'},
+
+		{q:'Kun ja maa tii-naiˇ?',  a:'You will come where?'},
+		{q:'Kun ja maa mua-rai?',  a:'You will come when?'},
+		{q:'Kun ja maa gii-mong?', a:'You will come what time?'},
+		{q:'Kun ja maa gab krai?', a:'You will come with whom?'},
+
+		{q:'Kun ja bpai tii-naiˇ?',  a:'You will go where?'},
+		{q:'Kun ja bpai mua-rai?',  a:'You will go when?'},
+		{q:'Kun ja bpai gii-mong?', a:'You will go what time?'},
+		{q:'Kun ja bpai gab krai?', a:'You will go with whom?'},
+
+		{q:'Kun ja maa glab` mua-rai?',  a:'You will come back when?'},
+		{q:'Kun ja maa glab` gii-mong?', a:'You will come back what time?'},
+		{q:'Kun ja maa glab` gab krai?', a:'You will come back with whom?'},
+	]
+}
+voyc.isntit = {
+	name: "isntit",
+	title: "Isn't It",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'__________, mai´?', a:'__________, yes? (common)'},
+		{q:'__________, chai‸ mai´?', a:'__________, right?'},
+		{q:'__________, rʉ´ bplao`?', a:'__________, yes? (proper)'},
+		{q:'__________, rerˇ?', a:'__________, really? (surprise)'},
+		{q:'__________, rʉ´ yang?', a:'Did you __________ yet?'},
+		{q:'__________ rʉʉ __________', a:'__________ or __________'},
+
+		{q:'Kun ja kgin arai?', a:'You will eat what?'},
+		{q:'Pom ja kgin polamaai´.', a:'I will eat fruit.'},
+		{q:'Pom ja kgin pak.', a:'I will eat vegetables.'},
+		{q:'Pom ja kgin gai.', a:'I will eat chicken.'},
+		{q:'Pom ja kgin muu.', a:'I will eat pork.'},
+
+		{q:'Kun ja kgin polamaai´, mai´?', a:'You will eat fruit, yes? (common)'},
+		{q:'Kun ja kgin polamaai´, chai‸ mai´?', a:'You will eat fruit, right?'},
+		{q:'Kun ja kgin polamaai´, rʉ´ bplao`?', a:'You will eat fruit, yes? (proper)'},
+		{q:'Kun ja kgin polamaai´, rerˇ?', a:'You will eat fruit, really? (surprise)'},
+		{q:'Kun kgin polamaai´, rʉ´ yang?', a:'Did you eat fruit yet?'},
+		{q:'Kun ja kgin polamaai´ rʉʉ pak?', a:'Will you eat fruit or vegetables?'},
+	]
+}
+voyc.actiontime = {
+	name: "actiontime",
+	title: "Action Time",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'Kun dtun gii-mong?', a:'You woke up at what time?'},
+		{q:'Pom dtun jet moong.', a:'I woke up at 7:00 AM.'},
+		{q:'Kun aab naam gii-mong?', a:'You showered at what time?'},
+		{q:'Pom aab naam bad moong.', a:'I showered at 8:00 AM.'},
+		{q:'Kun laang-naa gii-mong?', a:'You washed at what time?'},
+		{q:'Pom laang-naa bad moong.',   a:'I washed at 8:00 AM.'},
+		{q:'Kun bpraeng-fan gii-mong?',     a:'You brushed teeth at what time?'},
+		{q:'Pom bpraeng-fan bad moong krung.', a:'I brushed teeth at 8:30 AM.'},
+		{q:'Kun tam aahaan gii-mong?',     a:'You made food at what time?'},
+		{q:'Pom tam aahaan kao moong.', a:'I made food at 9:00 AM.'},
+		{q:'Kun ork gamlang gii-mong?', a:'You work out at what time?'},
+		{q:'Pom ork gamlang sip moong.',   a:'I work out at 10:00 AM.'},
+		{q:'Kun dtaeng-dtua gii-mong?', a:'You get dressed at what time?'},
+		{q:'Pom dtaeng-dtua sip moong kruung.',   a:'I get dressed at 10:30 AM.'},
+		{q:'Kun sai suua gii-mong?', a:'You put on shirt at what time?'},
+		{q:'Pom sai suua sip moong.',   a:'I put on shirt at 10:00 AM.'},
+		{q:'Kun sai gaang-geng gii-mong?', a:'You put on pants at what time?'},
+		{q:'Pom sai gaang-geng sip moong.',   a:'I put on pants at 10:00 AM.'},
+		{q:'Kun sai rong-tao gii-mong?', a:'You put on shoes at what time?'},
+		{q:'Pom sai rong-tao sip moong.',   a:'I put on shoes at 10:00 AM.'},
+		{q:'Kun duu TV gii-mong?',  a:'You watch TV at what time?'},
+		{q:'Pom duu TV baai moong.',   a:'I watch TV at 1:00 PM.'},
+		{q:'Kun chai´ computer gii-mong?',  a:'You use computer at what time?'},
+		{q:'Pom chai´ computer baai song moong.',   a:'I use computer at 2:00 PM.'},
+		{q:'Kun laang jaan gii-mong?',  a:'You wash dishes at what time?'},
+		{q:'Pom laang jaan baai saamˇ moong.',   a:'I wash dishes at 3:00 PM.'},
+		{q:'Kun ting kaya gii-mong?',  a:'You take out trash at what time?'},
+		{q:'Pom ting kaya baai si moong.',   a:'I take out trash at 4:00 PM.'},
+		{q:'Kun sak paa gii-mong?',  a:'You wash laundry at what time?'},
+		{q:'Pom sak paa haa‸ moong yen.',     a:'I wash laundry at 5:00 PM.'},
+		{q:'Kun dtaak paa gii-mong?',  a:'You dry laundry at what time?'},
+		{q:'Pom dtaak paa haa‸ moong yen krung.',   a:'I dry laundry at 5:30 PM.'},
+		{q:'Kun riid paa gii-mong?',  a:'You iron laundry at what time?'},
+		{q:'Pom riid paa hok moong yen.',   a:'I iron laundry at 6:00 PM.'},
+		{q:'Kun bpai suu kong gii-mong?',  a:'You go shopping at what time?'},
+		{q:'Pom bpai suu kong hok moong yen krung.',   a:'I go shopping at 6:30 PM.'},
+		{q:'Kun bpai suu gab-kaao gii-mong?',  a:'You go buy food at what time?'},
+		{q:'Pom bpai suu gab-kaao nʉng tum‸.',   a:'I go buy food at 7:00 PM.'},
+		{q:'Kun bpai dtalaad gii-mong?',  a:'You go to market at what time?'},
+		{q:'Pom bpai dtalaad jet nʉng tum‸ krung.',   a:'I go to market at 7:30 PM.'},
+	]
+}
+voyc.morningnoonnight = {
+	name: "morningnoonnight",
+	title: "Morning Noon Night",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'mua-rai', a:'when'},
+		{q:'dton-nii', a:'now'},
+		{q:'wan-nii', a:'today'},
+		{q:'kʉʉn-nii', a:'tonight'},
+		{q:'mua wan-nii', a:'yesterday'},
+		{q:'mua kʉʉn-nii', a:'last night'},
+		{q:'prung-nii', a:'tomorrow'},
+		{q:'glaang', a:'middle'},
+		{q:'dton glaang wan', a:'middle of the day'},
+		{q:'dton glaang kʉʉn', a:'middle of the night'},
+		{q:'dton chaao', a:'in the morning'},
+		{q:'dton baai', a:'in the afternoon'},
+		{q:'dton yen', a:'in the evening (16:30-19:00)'},
+		{q:'tuk-wan',   a:'every day'},
+		{q:'tuk-kʉʉn',  a:'every night'},
+		{q:'tuk-chaao', a:'every morning'},
+		{q:'tuk-baai',  a:'every afternoon'},
+		{q:'tuk-yen',   a:'every evening'},
+		{q:'chaao-nii', a:'this morning'},
+		{q:'baai-nii',  a:'this afternoon'},
+		{q:'yen-nii',   a:'this evening'},
+		{q:'Pom bpai suu kong dton yen.',   a:'I go shopping in the evening.'},
+		{q:'Pom bpai suu gab-kaao tuk-chaao.',   a:'I go buy food every morning.'},
+		{q:'Pom bpai dtalaad dton baai.',   a:'I go to market in the afternoon.'},
+		{q:'Pom ork gamlang tuk baai.',   a:'I work out every afternoon.'},
+	]
+}
+voyc.numbers = {
+	name: "numbers",
+	title: "Thai Numbers",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'gii-dtua?', a:'how many units (animals, people, containers)?'},
+		{q:'nʉng', a:'1'},
+		{q:'song', a:'2'},
+		{q:'saamˇ', a:'3'},
+		{q:'si', a:'4'},
+		{q:'haa‸', a:'5'},
+		{q:'hok', a:'6'},
+		{q:'jet', a:'7'},
+		{q:'bad', a:'8'},
+		{q:'kao', a:'9'},
+		{q:'sip', a:'10'},
+		{q:'sip ed', a:'11'},
+		{q:'sip song', a:'12'},
+		{q:'sip saamˇ', a:'13'},
+		{q:'sip si', a:'14'},
+		{q:'sip haa‸', a:'15'},
+		{q:'sip hok', a:'16'},
+		{q:'sip jet', a:'17'},
+		{q:'sip bad', a:'18'},
+		{q:'sip kao', a:'19'},
+		{q:'yii sip', a:'20'},
+		{q:'yii sip ed', a:'21'},
+		{q:'yii sip song', a:'22'},
+		{q:'yii sip saamˇ', a:'23'},
+		{q:'yii sip si', a:'24'},
+		{q:'yii sip haa‸', a:'25'},
+		{q:'yii sip hok', a:'26'},
+		{q:'yii sip jet', a:'27'},
+		{q:'yii sip bad', a:'28'},
+		{q:'yii sip kao', a:'29'},
+		{q:'saamˇ sip', a:'30'},
+		{q:'saamˇ sip ed', a:'31'},
+		{q:'saamˇ sip song', a:'32'},
+		{q:'saamˇ sip saamˇ', a:'33'},
+		{q:'saamˇ sip si', a:'34'},
+		{q:'saamˇ sip haa‸', a:'35'},
+		{q:'saamˇ sip hok', a:'36'},
+		{q:'saamˇ sip jet', a:'37'},
+		{q:'saamˇ sip bad', a:'38'},
+		{q:'saamˇ sip kao', a:'39'},
+		{q:'si sip', a:'40'},
+		{q:'si sip ed', a:'41'},
+		{q:'si sip song', a:'42'},
+		{q:'si sip saamˇ', a:'43'},
+		{q:'si sip si', a:'44'},
+		{q:'si sip haa‸', a:'45'},
+		{q:'si sip hok', a:'46'},
+		{q:'si sip jet', a:'47'},
+		{q:'si sip bad', a:'48'},
+		{q:'si sip kao', a:'49'},
+		{q:'haa‸ sip', a:'50'},
+		{q:'haa‸ sip ed', a:'51'},
+		{q:'haa‸ sip song', a:'52'},
+		{q:'haa‸ sip saamˇ', a:'53'},
+		{q:'haa‸ sip si', a:'54'},
+		{q:'haa‸ sip haa‸', a:'55'},
+		{q:'haa‸ sip hok', a:'56'},
+		{q:'haa‸ sip jet', a:'57'},
+		{q:'haa‸ sip bad', a:'58'},
+		{q:'haa‸ sip kao', a:'59'},
+		{q:'hok sip', a:'60'},
+		{q:'hok sip ed', a:'61'},
+		{q:'hok sip song', a:'62'},
+		{q:'hok sip saamˇ', a:'63'},
+		{q:'hok sip si', a:'64'},
+		{q:'hok sip haa‸', a:'65'},
+		{q:'hok sip hok', a:'66'},
+		{q:'hok sip jet', a:'67'},
+		{q:'hok sip bad', a:'68'},
+		{q:'hok sip kao', a:'69'},
+		{q:'jet sip', a:'70'},
+		{q:'jet sip ed', a:'71'},
+		{q:'jet sip song', a:'72'},
+		{q:'jet sip saamˇ', a:'73'},
+		{q:'jet sip si', a:'74'},
+		{q:'jet sip haa‸', a:'75'},
+		{q:'jet sip hok', a:'76'},
+		{q:'jet sip jet', a:'77'},
+		{q:'jet sip bad', a:'78'},
+		{q:'jet sip kao', a:'79'},
+		{q:'bad sip', a:'80'},
+		{q:'bad sip ed', a:'81'},
+		{q:'bad sip song', a:'82'},
+		{q:'bad sip saamˇ', a:'83'},
+		{q:'bad sip si', a:'84'},
+		{q:'bad sip haa‸', a:'85'},
+		{q:'bad sip hok', a:'86'},
+		{q:'bad sip jet', a:'87'},
+		{q:'bad sip bad', a:'88'},
+		{q:'bad sip kao', a:'89'},
+		{q:'kao sip', a:'90'},
+		{q:'kao sip ed', a:'91'},
+		{q:'kao sip song', a:'92'},
+		{q:'kao sip saamˇ', a:'93'},
+		{q:'kao sip si', a:'94'},
+		{q:'kao sip haa‸', a:'95'},
+		{q:'kao sip hok', a:'96'},
+		{q:'kao sip jet', a:'97'},
+		{q:'kao sip bad', a:'98'},
+		{q:'kao sip kao', a:'99'},
+		{q:'nʉng roi´', a:'100'},
+		{q:'nʉng pan', a:'1000'},
+		{q:'nʉng mʉʉn`', a:'10,000'},
+		{q:'nʉng saenˇ', a:'100,000'},
+		{q:'nʉng laan´', a:'1,000,000'},
+
+		{q:'Pom kgin kaao chaao : bad moong chaao', a:'I eat breakfast at 8:00 AM'},
+		{q:'Pom kgin kaao tiang‸ : baai moong', a:'I eat lunch at 1:00 PM'},
+		{q:'Pom kgin kaao yen : nʉng tum‸', a:'I eat dinner at 7:00 PM'},
+
+	]
+}
+voyc.clock = {
+	name: "clock",
+	title: "Clock",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'gii-mong?', a:'what time?'},
+		{q:'dtii', a:'strike iron bar'},
+		{q:'moong', a:'gong?'},
+		{q:'naligaa', a:'hours military time'},
+		{q:'dtii nʉng', a:'1:00 AM'},
+		{q:'dtii song', a:'2:00 AM'},
+		{q:'dtii saamˇ', a:'3:00 AM'},
+		{q:'dtii si',   a:'4:00 AM'},
+		{q:'dtii haa‸',   a:'5:00 AM'},
+		{q:'hok moong chaao', a:'6:00 AM'},
+		{q:'jet moong chaao', a:'7:00 AM'},
+		{q:'bad moong chaao', a:'8:00 AM'},
+		{q:'kao moong chaao', a:'9:00 AM'},
+		{q:'sip moong chaao', a:'10:00 AM'},
+		{q:'sip-ed moong chaao', a:'11:00 AM'},
+		{q:'tiang‸ wan', a:'12:00 PM, noon, straight up day'},
+		{q:'baai moong', a:'1:00 PM (13:00)'},
+		{q:'baai song moong', a:'2:00 PM (14:00)'},
+		{q:'baai saamˇ moong', a:'3:00 PM (15:00)'},
+		{q:'baai si moong', a:'4:00 PM (16:00)'},
+		{q:'haa‸ moong yen', a:'5:00 PM (17:00)'},
+		{q:'hok moong yen', a:'6:00 PM (18:00)'},
+		{q:'nʉng tum‸', a:'7:00 PM (19:00)'},
+		{q:'song tum‸', a:'8:00 PM (20:00)'},
+		{q:'saamˇ tum‸', a:'9:00 PM (21:00)'},
+		{q:'si tum‸', a:'10:00 PM (22:00)'},
+		{q:'haa‸ tum‸', a:'11:00 PM (23:00)'},
+		{q:'tiang‸ kʉʉn', a:'12:00 AM (24:00), midnight, straight up night'},
+	]
+}
+voyc.directions = {
+	name: "directions",
+	title: "Directions",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'liao´ kwaaˇ', a:'turn right'},
+		{q:'liao´ saai´', a:'turn left'},
+		{q:'dtrong bpai', a:'go straight'},
+		{q:'tii ', a:'at'},
+		{q:'tii si yaek‸', a:'at four-way intersection'},
+		{q:'tii saamˇ yaek‸', a:'at three-way intersection'},
+		{q:'tii fai daeng', a:'at traffic light'},
+		{q:'Kun kaam‸ tanonˇ', a:'You cross the road.'},
+		{q:'tii taang kaam‸', a:'at the (pedestrian) crossing'},
+		{q:'tii wong-wian', a:'at the roundabout'},
+		{q:'tii bpaai‸', a:'at the sign'},
+		{q:'yut', a:'stop'},
+		{q:'rot', a:'car'},
+		{q:'Rot wing reo.', a:'Car runs fast.'},
+		{q:'Rot wing chaaˇ.', a:'Car runs slowly.'},
+		{q:'Puud‸', a:'speak'},
+		{q:'Pom puud‸ chaaˇ-chaaˇ', a:'I speak slowly.'},
+		{q:'Kun puud‸ reo.', a:'You speak fast.'},
+		{q:'Pom mai‸ kao‸-jai.', a:'I do not understand.'},
+		{q:'Tanonˇ Huay‸-gaeo‸', a:'Huay Gaeo Road'},
+		{q:'Tanonˇ Nimman', a:'Nimman Road'},
+		{q:'Soi Sip Saamˇ', a:'Soi 13'},
+
+		//King Bhumibol Adulyadej
+	]
+}
+voyc.things = {
+	name: "things",
+	title: "Things",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'gii-dtua?', a:'how many units (animals, people, containers)?'},
+		{q:'gii', a:'how many'},
+		{q:'dii', a:'good'},
+		{q:'mii', a:'have'},
+		{q:'gaeo‸', a:'glass'},
+		{q:'kuad', a:'bottle'},
+		{q:'gaang-geng', a:'pants'},
+		{q:'sua‸', a:'shirt'},
+		{q:'dtiang', a:'bed'},
+		{q:'gao‸-ee‸', a:'chair'},
+		{q:'dtoh´', a:'table/desk'},
+	]
+}
+voyc.days = {
+	name: "days",
+	title: "Days",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'Put', a:'Wednesday'},
+		{q:'Jan', a:'Monday'},
+		{q:'Suk', a:'Friday'},
+		{q:'Unkaan', a:'Tuesday'},
+		{q:'Peruhat', a:'Thursday'},
+		{q:'Sao', a:'Saturday'},
+		{q:'Atit', a:'Sunday'},
+		{q:'wan',  a:'day'},
+		{q:'atit', a:'week'},
+		{q:'duan', a:'month'},
+		{q:'bpee', a:'year'},
+
+		// hours, minutes, seconds
+		{q:'chua-moong', a:'hour'},
+		{q:'naa-tii', a:'minute'},
+		{q:'winaa-tii', a:'second'},
+
+		{q:'nii', a:'this'},
+		{q:'naa', a:'next'},
+		{q:'tii-laeo', a:'previous'},
+		{q:'tuk', a:'every'},
+
+		// near, far
+		{q:'glai‸', a:'near'},
+		{q:'glai', a:'far'},
+		{q:'glai‸ glai‸', a:'very near'},
+		{q:'glai maak‸', a:'very far'},
+		{q:'glai mai´', a:'far, yes?'},
+		{q:'mai‸ glai', a:'not far'},
+
+		// can, cannot
+		{q:'dai‸', a:'can'},
+		{q:'dai‸ mai´', a:'can, yes?'},
+		{q:'mai‸ dai‸', a:'no can (cannot)'},
+		{q:'Pom puud‸ paa-saaˇ Thai dai‸ nid´-noi`.', a:'I can speak Thai language a little bit.'},
+		
+		
+		{q:'bra-dtuu', a:'door'},
+		
+		{q:'wan la nung chua-moong', a:'one hour per day'},
+		{q:'kilo la yee-sip baht', a:'20 baht per kilo'},
+		{q:'chua-moong la saamˇ roi´ baht', a:'300 baht per hour'},
+
+		{q:'paa-saaˇ', a:'language'},
+		{q:'kon', a:'person'},
+		{q:'bpra-ted‸', a:'country'},
+		{q:'Ang-grit', a:'England'},
+		{q:'Farangsed', a:'France'},
+		{q:'Yii-bun', a:'Japan'},
+		{q:'Gao-lii', a:'Korea'},
+		{q:'Jiin', a:'China'},
+		{q:'Pamaa', a:'Burma'},
+		{q:'Bpo-dtu-ged', a:'Portugal'},
+		{q:'Amerigaa', a:'America'},
+		{q:'Saha Rat', a:'United States'},
+
+		{q:'Pom maa jaak` bpra-ted‸ Saha Rat.', a:'I come from United States.'},
+		{q:'Pom bpen kon Amerigaa.', a:'I am an American.'},
+		{q:'Pom puud paa-saaˇ Ang-grit.', a:'I speak English.'},
+
+		{q:'Tuk Put pom rian paa-saaˇ Thai tii Kad Suan Kaew gab Kru Simon.', a:'Every Wednesday I study Thai language at Kad Suan Kaew with Teacher Simon.'},
+
+		// more questions
+		
+		{q:'arai',     a:'what'},
+		{q:'tii-naiˇ',  a:'where'},
+		{q:'mua-rai',  a:'when'},
+		{q:'gii-mong', a:'what time'},
+		{q:'gab krai', a:'with whom'},
+		{q:'tam mai',  a:'why'},
+		{q:'yaang-rai',a:'how'},
+
+		// toilet
+		{q:'hong-naam´',a:'toilet'},
+		{q:'Hong-naam´ yuu tii-naiˇ?',a:'Where is the toilet?'},
+
+		{q:'tii-nan‸', a:'(over) here'},
+		{q:'tii-nii‸', a:'(over) there'},
+		
+// thai-language.com
+		
+		{q:'braman', a:'approximately'},
+		{q:'dja', a:'will'},
+		{q:'henˇ', a:'see'},
+		{q:'dja henˇ', a:'will see'},
+		
+		{q:'ahaanˇ', a:'meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+
+		{q:'kwaaˇ-mʉʉ', a:'right hand'},
+
+		{q:'Kao‸ bpai nai soi', a:'Enter go in the soi.'},
+		{q:'kao‸', a:'enter'},
+		{q:'bpai', a:'go'},
+		{q:'nai',  a:'in'},
+
+		{q:'Pom yuu tii tanon Nimmanhemin.',  a:'I live at Nimmanhaemain Road.'},
+
+		{q:'song-taeo',  a:'two bench'},
+		{q:'sapaan',  a:'bridge'},
+		{q:'sapaan Nawarat',  a:'Nawarat Bridge'},
+	]
+}
+
+
+voyc.whichunittime = {
+	name: "whichunittime",
+	title: "whichunittime",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'wan nii', a:'today'},
+		{q:'atit nii', a:'this week'},
+		{q:'duan nii', a:'this month'},
+		{q:'bpee nii', a:'this year'},
+		{q:'chua-moong nii', a:'this hour'},
+		{q:'naa-tii nii', a:'this minute'},
+		{q:'winaa-tii nii', a:'this second'},
+		{q:'wan naa', a:'tomorrow'},
+		{q:'atit naa', a:'next week'},
+		{q:'duan naa', a:'next month'},
+		{q:'bpee naa', a:'next year'},
+		{q:'chua-moong naa', a:'next hour'},
+		{q:'naa-tii naa', a:'next minute'},
+		{q:'winaa-tii naa', a:'next second'},
+		{q:'wan tii-laeo', a:'yesterday'},
+		{q:'atit tii-laeo', a:'previous week'},
+		{q:'duan tii-laeo', a:'previous month'},
+		{q:'bpee tii-laeo', a:'previous year'},
+		{q:'chua-moong tii-laeo', a:'previous hour'},
+		{q:'naa-tii tii-laeo', a:'previous minute'},
+		{q:'winaa-tii tii-laeo', a:'previous second'},
+		{q:'tuk wan', a:'every day'},
+		{q:'tuk atit', a:'every week'},
+		{q:'tuk duan', a:'every month'},
+		{q:'tuk bpee', a:'every year'},
+		{q:'tuk chua-moong', a:'every hour'},
+		{q:'tuk naa-tii', a:'every minute'},
+		{q:'tuk winaa-tii', a:'every second'},
+	]
+}
+
+voyc.whereareyougoing = {
+	name: "whereareyougoing",
+	title: "Where Are You Going",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+/*
+Where is the post office?
+Post office is where?
+Day, minute morning?
+Mua vs tileao 
+Previous vs final
+Lesson,  category, category, part of speech
+Where: question, places
+Where are you going
+See you later
+
+*/
+		{q:'tii-naiˇ',  a:'where'},
+		// toilet
+		{q:'hong-naam´',a:'toilet'},
+		{q:'Hong-naam´ yuu tii-naiˇ?',a:'Where is the toilet?'},
+
+		{q:'tii-nan‸', a:'(over) here'},
+		{q:'tii-nii‸', a:'(over) there'},
+		
+		// near, far
+		{q:'glai‸', a:'near'},
+		{q:'glai', a:'far'},
+		{q:'glai‸ glai‸', a:'very near'},
+		{q:'glai maak‸', a:'very far'},
+		{q:'glai mai´', a:'far, yes?'},
+		{q:'mai‸ glai', a:'not far?'},
+
+		{q:'bra-dtuu', a:'door'},
+		
+		{q:'paa-saaˇ', a:'language'},
+		{q:'kon', a:'person'},
+		{q:'bpra-ted‸', a:'country'},
+		{q:'Ang-grit', a:'England'},
+		{q:'Farangsed', a:'France'},
+		{q:'Yii-bun', a:'Japan'},
+		{q:'Gao-lii', a:'Korea'},
+		{q:'Jiin', a:'China'},
+		{q:'Pamaa', a:'Burma'},
+		{q:'Bpo-dtu-ged', a:'Portugal'},
+		{q:'Amerigaa', a:'America'},
+		{q:'Saha Rat', a:'United States'},
+
+		{q:'Pom maa jaak` bpra-ted‸ Saha Rat.', a:'I come from United States.'},
+		{q:'Pom bpen kon Amerigaa.', a:'I am an American.'},
+		{q:'Pom puud paa-saaˇ Ang-grit.', a:'I speak English.'},
+
+		{q:'Tuk Put pom rian paa-saaˇ Thai tii Kad Suan Kaew gab Kru Simon.', a:'Every Wednesday I study Thai language at Kad Suan Kaew with Teacher Simon.'},
+		
+		{q:'ahaanˇ', a:'meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+		{q:'raan´ ahaanˇ', a:'store meal'},
+
+		{q:'kwaaˇ-mʉʉ', a:'right hand'},
+
+		{q:'Kao‸ bpai nai soi', a:'Enter go in the soi.'},
+		{q:'kao‸', a:'enter'},
+		{q:'bpai', a:'go'},
+		{q:'nai',  a:'in'},
+
+		{q:'Pom yuu tii tanon Nimmanhemin.',  a:'I live at Nimmanhaemain Road.'},
+
+		{q:'song-taeo',  a:'two bench'},
+		{q:'sapaan',  a:'bridge'},
+		{q:'sapaan Nawarat',  a:'Nawarat Bridge'},
+
+		// in relation to something else
+		{q:'nai',   a:'in'},
+		{q:'bon',   a:'on'},
+		{q:'dtaai‸',a:'under'},
+		{q:'naa‸',  a:'before'},
+		{q:'langˇ', a:'back'},
+		{q:'kaang‸',a:'side'},
+		{q:'kaang‸-nai',   a:'inside'},
+		{q:'kaang‸-bon',   a:'on top'},
+		{q:'kaang‸-dtaai‸',a:'underneath'},
+		{q:'kaang‸-naa‸',  a:'in front of'},
+		{q:'kaang‸-langˇ', a:'behind'},
+		{q:'kaang‸-kaang‸',a:'beside'},
+	
+		{q:'kaang‸-laangˇ', a:'below'},
+		{q:'kaang‸-nork‸', a:'outside'},
+		{q:'dtrong-kaam‸', a:'opposite (straight across)'},
+		{q:'tad`-jaak`', a:'next to'},
+
+		// public buildings
+		{q:'roong', a:'hall'},
+		{q:'roong payabaan', a:'hospital'},
+		{q:'roong rian', a:'school'},
+		{q:'roong nangˇ', a:'cinema'},
+		{q:'roong nagaan', a:'factory'},
+
+		{q:'sataaˇ-nii', a:'station'},
+		{q:'sataaˇ-nii dtam ru`-ad', a:'station police'},
+		{q:'sataaˇ-nii rot fai', a:'train station (car fire)'},
+		{q:'sataaˇ-nii rot mei', a:'bus station'},
+
+		{q:'pop-gan wan-langˇ', a:'See you later.'},
+		{q:'pop-gan wan-naa', a:'See you soon (future).'},
+	]
+}
+
+voyc.whatareyoudoing = {
+	name: "whatareyoudoing",
+	title: "What Are You Doing",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'araiˇ',  a:'what'},
+	]
+}
+
+voyc.test = {
+	name: "test",
+	title: "test",
+	reversible:true,
+	language:false,
+	sketch:false,
+	translit:false,
+	audio:false,
+	db: false,
+	hm: false, // show translit with question or answer
+	cards: [
+		{q:'Kun gamlang ja bpai tii-naiˇ, krab?',  a:'Where are you going?'},
+		{q:'Gamlang ja bpai naiˇ, krab?',  a:'Where are you going?'},
+		{q:'Gamlang tam araiˇ yuu`, krab?',  a:'What are you doing?'},
+		{q:'Pop-gan wan-langˇ, krab', a:'See you later.'},
+		{q:'Pop-gan wan-naa, krab', a:'See you soon (future).'},
+		{q:'Pomˇ mai‸ ruuˇ, krab.', a:'I do not know.'},
+		{q:'Pom mai‸ kao‸-jai, krab.', a:'I do not understand.'},
+
+		// in relation to something else
+		{q:'nai',   a:'in'},
+		{q:'bon',   a:'on'},
+		{q:'dtaai‸',a:'under'},
+		{q:'naa‸',  a:'before'},
+		{q:'langˇ', a:'back'},
+		{q:'kaang‸',a:'side'},
+		{q:'kaang‸-nai',   a:'inside'},
+		{q:'kaang‸-bon',   a:'on top'},
+		{q:'kaang‸-dtaai‸',a:'underneath'},
+		{q:'kaang‸-naa‸',  a:'in front of'},
+		{q:'kaang‸-langˇ', a:'behind'},
+		{q:'kaang‸-kaang‸',a:'beside'},
+	
+		{q:'kaang‸-laangˇ', a:'below'},
+		{q:'kaang‸-nork‸', a:'outside'},
+		{q:'dtrong-kaam‸', a:'opposite (straight across)'},
+		{q:'tad`-jaak`', a:'next to'},
+
+		// public buildings
+		{q:'roong', a:'hall'},
+		{q:'roong payabaan', a:'hospital'},
+		{q:'roong rian', a:'school'},
+		{q:'roong nangˇ', a:'cinema'},
+		{q:'roong nagaan', a:'factory'},
+
+		{q:'sataaˇ-nii', a:'station'},
+		{q:'sataaˇ-nii dtam ru`-ad', a:'station police'},
+		{q:'sataaˇ-nii rot fai', a:'train station (car fire)'},
+		{q:'sataaˇ-nii rot mei', a:'bus station'},
+	]
+}
+
+voyc.practice = function(set) {
+	// open the Flash window
+	var delay = 200;
+	var url = 'http://flash.voyc.com';
+	if (window.location.href.indexOf('file:') > -1) {
+		url = 'file:///C:/Users/John/webapps/flash/index.html'; // local testing
+	}
+	if (voyc.winFlash && !voyc.winFlash.closed) {
+		console.log('Flash already open');
+		voyc.winFlash.focus();
+	}
+	else {
+		console.log('opening Flash');
+		voyc.winFlash = window.open(url, 'flash');
+		delay = 1200;
+	}
+	
+	// pass the data structure to the Flash window
+	var cset = set;
+	setTimeout(function() {
+		console.log('posting message to Flash');
+		voyc.winFlash.postMessage(cset, '*');
+	}, delay);
+}
+window.addEventListener('load', function(evt) {
+	document.getElementById('conversation').addEventListener('click', function(evt) { voyc.practice(voyc.conversation); }, false);
+	document.getElementById('whatwhenwhere').addEventListener('click', function(evt) { voyc.practice(voyc.whatwhenwhere); }, false);
+	document.getElementById('isntit').addEventListener('click', function(evt) { voyc.practice(voyc.isntit); }, false);
+	document.getElementById('actiontime').addEventListener('click', function(evt) { voyc.practice(voyc.actiontime); }, false);
+	document.getElementById('morningnoonnight').addEventListener('click', function(evt) { voyc.practice(voyc.morningnoonnight); }, false);
+	document.getElementById('numbers').addEventListener('click', function(evt) { voyc.practice(voyc.numbers); }, false);
+	document.getElementById('clock').addEventListener('click', function(evt) { voyc.practice(voyc.clock); }, false);
+	document.getElementById('directions').addEventListener('click', function(evt) { voyc.practice(voyc.directions); }, false);
+	document.getElementById('things').addEventListener('click', function(evt) { voyc.practice(voyc.things); }, false);
+	document.getElementById('days').addEventListener('click', function(evt) { voyc.practice(voyc.days); }, false);
+	document.getElementById('whichunittime').addEventListener('click', function(evt) { voyc.practice(voyc.whichunittime); }, false);
+	document.getElementById('whereareyougoing').addEventListener('click', function(evt) { voyc.practice(voyc.whereareyougoing); }, false);
+	document.getElementById('whatareyoudoing').addEventListener('click', function(evt) { voyc.practice(voyc.whatareyoudoing); }, false);
+	document.getElementById('test').addEventListener('click', function(evt) { voyc.practice(voyc.test); }, false);
+}, false);
+</script>
+</head>
+<body>
+<button id=conversation>Conversation</button>
+<button id=whatwhenwhere>What When Where</button>
+<button id=isntit>Isn't It</button>
+<button id=actiontime>Action Time</button>
+<button id=morningnoonnight>Morning Noon Night</button>
+<button id=numbers>Numbers</button>
+<button id=clock>Clock</button>
+<button id=directions>Directions</button>
+<button id=things>Things</button>
+<button id=days>Days</button>
+<button id=whichunittime>whichunittime</button>
+<button id=whereareyougoing>Where are you going?</button>
+<button id=whatareyoudoing>What are you doing?</button>
+<button id=test>test</button>
+</body>
+</html>

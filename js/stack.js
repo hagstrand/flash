@@ -8,7 +8,7 @@
 function Stack(state, dir) {
 	this.state = state;
 	this.dir = dir;
-	this.owner = flash.program;
+	this.owner = voyc.flash.program;
 	this.set = [];	// an array of ids
 	this.ndx = -1;  // used only by current() and nextSequential()
 	this.avgPct = 0;

@@ -7,6 +7,7 @@
 		<style>[hidden] {display:none ! important;}</style>
 
 <?php if (false) { ?>
+		<script src='js/namespace.js'></script>
 		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
 		<link  href='minimal/minimal.css' rel='stylesheet' type='text/css'></link>
 		<script src='minimal/minimal.js'></script>
@@ -16,7 +17,6 @@
 		<script src='jslib/note.js'></script>
 		<script src='jslib/browserhistory.js'></script>
 		<script src='jslib/sketch.js'></script>
-		<script src='jslib/voyclogo.js'></script>
 		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
 		<script src='icon/icon.js'></script>
 		<script src='icon/lib/menu.js'></script>
@@ -89,7 +89,9 @@
 			</div>
 			<div hidden id='subject'>
 				<h1 id='pageheader'></h1>
+<!--
 				<p><button id='practice'>Practice</button></p>
+-->
 				<div select class='panel list blu'>
 					<h3>Select Cards</h3>
 					<table id='pagetable'></table>
@@ -99,6 +101,7 @@
 				<h1>Custom</h1>
 				<p>Enter your own pairs of question and answer.</p>
 				<p><textarea id='custominput'></textarea></p>
+				<p><button id='practice'>Practice</button></p>
 			</div>
 			<div hidden id='deskcontainer'></div>
 		</main>
@@ -117,7 +120,7 @@
 		</aside>
 
 		<footer>
-			<a class='ftr voyclogo' target='_blank' href='http://voyc.com'>voyc</a>
+			<a class='ftr voyclogo' target='_blank' href='http://voyc.com'><img src='i/voyclogo.svg'/></a>
 			<a class='ftr' target='_blank' href='http://github.com/hagstrand/flash'>github</a>
 		</footer>
 	</body>

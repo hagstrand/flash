@@ -89,13 +89,13 @@ Coach.prototype = {
 
 		this.card = this.choose();
 		if (!this.card) {
-			this.observer.publish(new Note('program-completed','coach',{}));
+			this.observer.publish(new voyc.Note('program-completed','coach',{}));
 			return;
 		}
 
-		var stacks = flash.program.drawStacks();
+		var stacks = voyc.flash.program.drawStacks();
 
-		this.observer.publish(new Note('question','coach',{
+		this.observer.publish(new voyc.Note('question','coach',{
 				card:this.card,
 				nSession:this.nSession,
 				stacks:stacks,
@@ -112,7 +112,7 @@ Coach.prototype = {
 
 		// calc avg pct on the stack
 		var state = this.card.getState(this.dir);
-		var stack = flash.program.getStack(state,this.dir);
+		var stack = voyc.flash.program.getStack(state,this.dir);
 		stack.calcAvgPct(this.dir);
 
 		this.promote();
@@ -122,7 +122,7 @@ Coach.prototype = {
 	},
 
 	toggleDir: function() {
-		this.observer.publish(new Note('changedirection-request', 'coach', {dir:false}));
+		this.observer.publish(new voyc.Note('changedirection-request', 'coach', {dir:false}));
 	},
 	onDirectionChange: function(note) {
 		this.dir = note.payload.dir;
@@ -134,15 +134,15 @@ Coach.prototype = {
 	// algorithm: choose
 	choose: function () {
 		if (!this.setting['isAutoChoose']) {
-			var workStack = flash.program.getStack(flashc.work, this.dir);
+			var workStack = voyc.flash.program.getStack(State.WORK, this.dir);
 			next = workStack.nextRandom();  // nextSequential
 			return next;
 		}
 		
 		// choose next card from work or review
-		var workStack = flash.program.getStack(flashc.work, this.dir);
-		var reviewStack = flash.program.getStack(flashc.review, this.dir);
-		var untriedStack = flash.program.getStack(flashc.untried, this.dir);
+		var workStack = voyc.flash.program.getStack(State.WORK, this.dir);
+		var reviewStack = voyc.flash.program.getStack(State.REVIEW, this.dir);
+		var untriedStack = voyc.flash.program.getStack(State.UNTRIED, this.dir);
 
 		// if untried, work, and review are empty, then user has finished the program
 		if (!workStack.getLength() && !reviewStack.getLength() && !untriedStack.getLength()) {
@@ -172,29 +172,29 @@ Coach.prototype = {
 			return;
 
 		// promote work to review
-		if (this.card.getState(this.dir) == flashc.work
+		if (this.card.getState(this.dir) == State.WORK
 				&& this.card[this.dir].aCnt >= this.setting['promoteCntWork']
 				&& this.card[this.dir].pct >= this.setting['promotePctWork']) {
-			flash.program.changeCardState(this.card, flashc.review);
+			voyc.flash.program.changeCardState(this.card, State.REVIEW);
 		}
 
 		// promote review to mastered
-		if (this.card.getState(this.dir) == flashc.review
+		if (this.card.getState(this.dir) == State.REVIEW
 				&& this.card[this.dir].aCnt >= this.setting['promoteCntReview']
 				&& this.card[this.dir].pct >= this.setting['promotePctReview']) {
-			flash.program.changeCardState(this.card, flashc.mastered);
+			voyc.flash.program.changeCardState(this.card, State.MASTERED);
 		}
 	},
 	
 	// algorithm: pull
 	pull: function () {
 		// fill workset to minimum
-		var workStack = flash.program.getStack(flashc.work, this.dir);
-		var untriedStack = flash.program.getStack(flashc.untried, this.dir);
+		var workStack = voyc.flash.program.getStack(State.WORK, this.dir);
+		var untriedStack = voyc.flash.program.getStack(State.UNTRIED, this.dir);
 		while ((workStack.getLength() < this.setting['minSizeWork']) && (untriedStack.getLength() > 0)) {
 			var next = untriedStack.nextSequential();
 			if (next) {
-				flash.program.changeCardState(next, flashc.work);
+				voyc.flash.program.changeCardState(next, State.WORK);
 			}
 		}
 
@@ -202,10 +202,10 @@ Coach.prototype = {
 		if ((this.setting['isAutoPull'])
 				&& (workStack.getLength() < this.setting['maxSizeWork'])
 				&& (workStack.getAvgPct(this.dir) > this.setting['minAvgPctWork'])) {
-			var untriedStack = flash.program.getStack(flashc.untried, this.dir);
+			var untriedStack = voyc.flash.program.getStack(State.UNTRIED, this.dir);
 			var next = untriedStack.nextSequential();
 			if (next) {
-				flash.program.changeCardState(next, flashc.work);
+				voyc.flash.program.changeCardState(next, State.WORK);
 			}
 		}
 	},

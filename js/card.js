@@ -4,7 +4,7 @@
 	@constructor
 	Contains the scoring for one question
  */
- 
+
 function Card(quest) {
 	// The input quest is external data.
 	this.id = quest['i'] || Card.id++;      // id
@@ -99,7 +99,7 @@ Card.prototype = {
 		this[dir].pct = this.calcPct(dir);
 		this[dir].recent.shift();
 		this[dir].recent.push((banswer) ? 1 : 0);
-		this[dir].z = flash.coach.nSession;
+		this[dir].z = voyc.flash.coach.nSession;
 	},
 
 	getConsecutiveCorrect: function(dir) {

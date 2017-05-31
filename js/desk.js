@@ -114,62 +114,62 @@ Desk.prototype = {
 		this.container = container;
 		this.observer = observer;
 
-		var s = prepString(Desk.html, ['qa','aq','show-stacks','program-name'], Desk.strings);
+		var s = voyc.prepString(Desk.html, ['qa','aq','show-stacks','program-name'], Desk.strings);
 		this.container.innerHTML = s;
 		
-		this.minimal = new Minimal();
+		this.minimal = new voyc.Minimal();
 		this.minimal.attachAll(this.container);
 
-		(new Icon()).attachAll(this.container);
-		(new Icon()).drawAll();
+		(new voyc.Icon()).attachAll(this.container);
+		(new voyc.Icon()).drawAll();
 
-		this.sketchMarks = new Sketch($('sketchcanvas'), {hasGrid:true, gridSize:20});
+		this.sketchMarks = new voyc.Sketch(voyc.$('sketchcanvas'), {hasGrid:true, gridSize:20});
 		this.attachDomEventHandlers();
 		this.attachFlashNoteHandlers();
 	},
 
 	attachDomEventHandlers: function() {
 		var self = this;
-		$('settings').addEventListener('open', function(e) {
+		voyc.$('settings').addEventListener('open', function(e) {
 			self.populateSettingsForm();
 		}, false);
 
-		$('dir-qa-btn').addEventListener('click',function(event) {
+		voyc.$('dir-qa-btn').addEventListener('click',function(event) {
 			self.toggleDir('aq');
 		});
-		$('dir-aq-btn').addEventListener('click',function(event) {
+		voyc.$('dir-aq-btn').addEventListener('click',function(event) {
 			self.toggleDir('qa');
 		});
 
-		$('show-answer-btn').addEventListener('click',function(event) {
+		voyc.$('show-answer-btn').addEventListener('click',function(event) {
 			self.showAnswer();
 		});
 
-		$('right-btn').addEventListener('click',function(event) {
+		voyc.$('right-btn').addEventListener('click',function(event) {
 			self.onAnswer(true);
 		});
-		$('wrong-btn').addEventListener('click',function(event) {
+		voyc.$('wrong-btn').addEventListener('click',function(event) {
 			self.onAnswer(false);
 		});
 
-		$('sketch-btn').addEventListener('click', function(event) {
+		voyc.$('sketch-btn').addEventListener('click', function(event) {
 			self.toggleSketch();
 		}, false);
 
-		$('audio-btn').addEventListener('click', function(event) {
+		voyc.$('audio-btn').addEventListener('click', function(event) {
 			var afile = self.card.audiourl;
 			var audio = new Audio(afile);
 			audio.play();
 		}, false);
 
 		// attach handlers for the settings form
-		this.cbfields = $('settings').querySelectorAll('input[type=checkbox]');
+		this.cbfields = voyc.$('settings').querySelectorAll('input[type=checkbox]');
 		for (var i=0; i<this.cbfields.length; i++) {
 			this.cbfields[i].addEventListener('change', function(e) {
 				flash.coach.setting[e.target.id] = e.target.checked;
 			});
 		}
-		this.numfields = $('settings').querySelectorAll('input[type=number]');
+		this.numfields = voyc.$('settings').querySelectorAll('input[type=number]');
 		for (var i=0; i<this.numfields.length; i++) {
 			this.numfields[i].addEventListener('change', function(e) {
 				flash.coach.setting[e.target.id] = e.target.value;
@@ -180,10 +180,10 @@ Desk.prototype = {
 		window.addEventListener('keyup', function(event) {
 			if (event.keyCode == 80) {  // p
 				if (self.isAutoPlay) {
-					self.observer.publish(new Note('autoplay-cancelled', 'desk', {}));
+					self.observer.publish(new voyc.Note('autoplay-cancelled', 'desk', {}));
 				}
 				else {
-					self.observer.publish(new Note('autoplay-request', 'desk', {}));
+					self.observer.publish(new voyc.Note('autoplay-request', 'desk', {}));
 				}
 			}
 		}, false);
@@ -213,34 +213,34 @@ Desk.prototype = {
 	},
 
 	toggleDir: function(dir) {
-		this.observer.publish(new Note('changedirection-request', 'desk', {dir:dir}));
+		this.observer.publish(new voyc.Note('changedirection-request', 'desk', {dir:dir}));
 	},
 
 	onDirectionChange: function(note) {
 		this.reverse = (note.payload.dir == 'aq');
-		toggleAttribute($('dir-qa-btn'), 'hidden', '', this.reverse);
-		toggleAttribute($('dir-aq-btn'), 'hidden', '', !this.reverse);
+		voyc.toggleAttribute(voyc.$('dir-qa-btn'), 'hidden', '', this.reverse);
+		voyc.toggleAttribute(voyc.$('dir-aq-btn'), 'hidden', '', !this.reverse);
 	},
 	
 	clear: function(headertoo) {
 		if (headertoo) {
-			$('program-name').innerHTML = '&nbsp;';
+			voyc.$('program-name').innerHTML = '&nbsp;';
 //			$('program-dir').innerHTML = '&nbsp;';
 		}
-		$('question').innerHTML = '&nbsp;';
-		$('answer').innerHTML = '&nbsp;';
-		$('translit').innerHTML = '&nbsp;';
-		$('show-answer-btns').removeAttribute('hidden');
-		$('right-wrong-btns').setAttribute('hidden', '');
+		voyc.$('question').innerHTML = '&nbsp;';
+		voyc.$('answer').innerHTML = '&nbsp;';
+		voyc.$('translit').innerHTML = '&nbsp;';
+		voyc.$('show-answer-btns').removeAttribute('hidden');
+		voyc.$('right-wrong-btns').setAttribute('hidden', '');
 		this.sketchMarks.clear();
 	},
 	showQuestion: function(note) {
 		this.card = note.payload.card;
-		$('question').innerHTML = (this.reverse) ? this.card.native : this.card.foreign;
-		$('answer').innerHTML = '&nbsp;';
-		$('translit').innerHTML = '&nbsp;';
-		$('right-wrong-btns').setAttribute('hidden', '');
-		$('show-answer-btns').removeAttribute('hidden');
+		voyc.$('question').innerHTML = (this.reverse) ? this.card.native : this.card.foreign;
+		voyc.$('answer').innerHTML = '&nbsp;';
+		voyc.$('translit').innerHTML = '&nbsp;';
+		voyc.$('right-wrong-btns').setAttribute('hidden', '');
+		voyc.$('show-answer-btns').removeAttribute('hidden');
 
 //		this.playSound(this.card.audio);
 // implement fx/playsound.html Sound object
@@ -286,11 +286,11 @@ Desk.prototype = {
 			return;
 
 		if (this.translitEnabled) {
-			$('translit').innerHTML = this.card.translit;
+			voyc.$('translit').innerHTML = this.card.translit;
 		}
-		$('answer').innerHTML = (this.reverse) ? this.card.foreign : this.card.native;
-		$('show-answer-btns').setAttribute('hidden', '');
-		$('right-wrong-btns').removeAttribute('hidden');
+		voyc.$('answer').innerHTML = (this.reverse) ? this.card.foreign : this.card.native;
+		voyc.$('show-answer-btns').setAttribute('hidden', '');
+		voyc.$('right-wrong-btns').removeAttribute('hidden');
 
 		if (this.isAutoPlay) {
 			var self = this;
@@ -301,14 +301,14 @@ Desk.prototype = {
 	onAnswer: function(answer) {
 		this.answer = answer; // true/false, right/wrong
 		this.clear();
-		this.observer.publish(new Note('answer', 'desk', {
+		this.observer.publish(new voyc.Note('answer', 'desk', {
 			card:this.card,
 			answer:answer
 		}));
 	},
 
 	onPromote: function(promote) {
-		this.observer.publish(new Note('promote-request', 'desk', {
+		this.observer.publish(new voyc.Note('promote-request', 'desk', {
 			card:this.card,
 			promote:promote,
 		}));
@@ -337,46 +337,46 @@ Desk.prototype = {
 
 	resizeAnswer: function(big) {
 		// resize the answer font
-		$('answer').classList.toggle('sketchfont', big);
+		voyc.$('answer').classList.toggle('sketchfont', big);
 
 		// get the new size
-		var s = getComputedStyle($('answer'));
+		var s = getComputedStyle(voyc.$('answer'));
 		var w = parseInt(s.paddingLeft,10) + parseInt(s.paddingRight,10) + parseInt(s.width,10);
 		var h = parseInt(s.paddingTop,10) + parseInt(s.paddingBottom,10) + parseInt(s.height,10);
 
 		// size the canvas to match
-		var c = $('sketchcanvas');
+		var c = voyc.$('sketchcanvas');
 		c.style.width = w + 'px';
 		c.style.height = h + 'px';
 		c.style.top = (0-h) + 'px';
 
 		// shrink the container to match
-		$('answer-container').style.height = h + 'px';
+		voyc.$('answer-container').style.height = h + 'px';
 	},
 
 	toggleSketch: function(enable) {
 		this.isSketchEnabled = (enable) ? enable : !this.isSketchEnabled;
 		if (this.isSketchEnabled) {
 			this.resizeAnswer(true);
-			$('sketchcanvas').removeAttribute('hidden');
+			voyc.$('sketchcanvas').removeAttribute('hidden');
 			this.sketchMarks.draw();
 		}
 		else {
 			this.resizeAnswer(false);
-			$('sketchcanvas').setAttribute('hidden', '');
+			voyc.$('sketchcanvas').setAttribute('hidden', '');
 			this.sketchMarks.clear();
 		}
 	},
 
 	toggleStacks: function(show) {
 		this.isStacksShowing = (show) ? show : !this.isStacksShowing;
-		toggleAttribute($('stacks'), 'hidden', '', !this.isStacksShowing);
+		toggleAttribute(voyc.$('stacks'), 'hidden', '', !this.isStacksShowing);
 	},
 
 	onProgramReady: function(note) {
-		$('program-name').innerHTML = note.payload.features.title;
+		voyc.$('program-name').innerHTML = note.payload.features.title;
 		if (!note.payload.features.reversible) {
-			hide('dirbuttons');
+			voyc.hide('dirbuttons');
 		}
 		this.onDirectionChange(note);
 	},
@@ -390,12 +390,12 @@ Desk.prototype = {
 			if (state == 'p') 
 				continue;
 			if (note.payload.stacks) {
-				$('stack'+state).innerHTML = note.payload.stacks[state];
+				voyc.$('stack'+state).innerHTML = note.payload.stacks[state];
 			}
 		}
 
 		// setup select and drag-and-drop of cards the stacks
-		this.minimal.attachAll($('stacks'));
+		this.minimal.attachAll(voyc.$('stacks'));
 	},
 
 	// Coach is handling settings. Desk is displaying settings.
@@ -403,15 +403,15 @@ Desk.prototype = {
 		var setting;
 		for (var i=0; i<this.cbfields.length; i++) {
 			setting = this.cbfields[i].id;
-			$(setting).checked = flash.coach.setting[setting];
+			voyc.$(setting).checked = flash.coach.setting[setting];
 		}
 		for (var i=0; i<this.numfields.length; i++) {
 			setting = this.numfields[i].id;
-			$(setting).value = flash.coach.setting[setting];
+			voyc.$(setting).value = flash.coach.setting[setting];
 		}
-		var p = getAbsolutePosition($('desk'));
-		var w = $('desk').offsetWidth;
-		$('settings').style.top = p.y + 'px';
-		$('settings').style.right = (p.x) + 'px';
+		var p = getAbsolutePosition(voyc.$('desk'));
+		var w = voyc.$('desk').offsetWidth;
+		voyc.$('settings').style.top = p.y + 'px';
+		voyc.$('settings').style.right = (p.x) + 'px';
 	}
 }

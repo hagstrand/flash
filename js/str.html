@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Str test</title>
+		<script src='str.js'></script>
+		<script>
+
+		mystrings = {
+			'changing-program': 'Loading the $1 program.',
+			'qa': 'Reading/Listening',
+			12: 'Writing/Speaking',
+			'email-not-found': 'This username or email is not found.',
+		}
+
+		window.addEventListener('load', function() {
+
+			Str.strings = mystrings;
+			var s = '';
+			s += Str.get('qa') + '<br/>';
+			s += Str.get('email-not-found') + '<br/>';
+			s += Str.get('changing-program', ['replicate']) + '<br/>';
+			s += Str.get(12) + '<br/>';
+
+			document.getElementById('msg').innerHTML = s;
+		}, false);
+		</script>
+
+	</head>
+	<body>
+		<p id='msg'>loading...</p>
+		</body>
+</html>

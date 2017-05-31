@@ -31,11 +31,11 @@ function Program() {
 
 	// card stacks, by dir and state
 	this.stacks = {};
-	this.stacks[flashc.qa] = {};
-	this.stacks[flashc.aq] = {};
+	this.stacks[Dir.FORWARD] = {};
+	this.stacks[Dir.REVERSE] = {};
 	
 	// working variables
-	this.dir = flashc.qa;
+	this.dir = Dir.FORWARD;
 }
 
 Program.prototype.setup = function(observer) {
@@ -68,22 +68,22 @@ Program.prototype.loadData = function(data) {
 		if (!this.cards[id]) {
 			this.cards[id] = card;
 
-			dir = flashc.qa;
+			dir = Dir.FORWARD;
 			state = card.getState(dir);
 			this.addCardToStack(card, state, dir);
 			if (state == Card.untried) {
 				this.highSeq = card.seq;
 			}
 
-			dir = flashc.aq;
+			dir = Dir.REVERSE;
 			state = card.getState(dir);
 			this.addCardToStack(card, state, dir);
 		}
 	}
 
-	this.observer.publish(new Note('cards-loaded', 'program', {}));
+	this.observer.publish(new voyc.Note('cards-loaded', 'program', {}));
 
-	this.observer.publish(new Note('program-ready', 'program', {
+	this.observer.publish(new voyc.Note('program-ready', 'program', {
 		features:this.features,
 		dir:this.dir
 	}));
@@ -95,8 +95,8 @@ Program.prototype.initStacks = function() {
 	this.cards = {};
 	for (var state, st=0; st<Card.allStates.length; st++) {
 		state = Card.allStates[st];
-		this.stacks[flashc.qa][state] = new Stack(state, flashc.qa);
-		this.stacks[flashc.aq][state] = new Stack(state, flashc.aq);
+		this.stacks[Dir.FORWARD][state] = new Stack(state, Dir.FORWARD);
+		this.stacks[Dir.REVERSE][state] = new Stack(state, Dir.REVERSE);
 	}
 }
 
@@ -106,10 +106,10 @@ Program.prototype.clearMastered = function() {
 	for (var i in this.cards) {
 		card = this.cards[i];
 		if (card.isClean() 
-				&& card.getState(flashc.qa) == Card.mastered 
-				&& card.getState(flashc.aq) == Card.mastered
+				&& card.getState(Dir.FORWARD) == Card.mastered 
+				&& card.getState(Dir.REVERSE) == Card.mastered
 			) {
-			var allDirs = [flashc.qa,flashc.aq];
+			var allDirs = [Dir.FORWARD,Dir.REVERSE];
 			for (var d=0; d<allDirs.length; d++) {
 				dir = allDirs[d];
 				stack = this.getStack(Card.mastered, dir);
@@ -152,7 +152,7 @@ Program.prototype.changeCardState = function(card, newState, direction, quiet) {
 
 Program.prototype.stackChanged = function() {
 	var stacks = this.drawStacks();
-	this.observer.publish(new Note('stackchange-complete', 'program', {
+	this.observer.publish(new voyc.Note('stackchange-complete', 'program', {
 		stacks:stacks
 	}));
 }
@@ -173,9 +173,9 @@ Program.prototype.changeDirection = function(note) {
 		this.dir = note.payload.dir;
 	}
 	else {
-		this.dir = (this.dir == flashc.qa) ? flashc.aq : flashc.qa;
+		this.dir = (this.dir == Dir.FORWARD) ? Dir.REVERSE : Dir.FORWARD;
 	}
-	this.observer.publish(new Note('changedirection-complete', 'program', {
+	this.observer.publish(new voyc.Note('changedirection-complete', 'program', {
 		dir:this.dir
 	}));
 	

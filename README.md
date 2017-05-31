@@ -1,5 +1,5 @@
 # flash
 Smart flash cards.
 
-http://flash.hagstrand.com
+http://flash.voyc.com
 
