@@ -4,7 +4,7 @@
 python compilejs.py >min.js
 
 # concatenate and compile the css files
-cat normalize.css/normalize.css minimal/minimal.css icon/icon.css css/theme.css css/flash.css css/desk.css >min.css
+cat minimal/normaleyes.css minimal/minimal.css icon/icon.css css/theme.css css/flash.css css/desk.css >min.css
 java -jar /home/jhagstrand/bin/yuicompressor/yuicompressor-2.4.2.jar min.css -o min.css --charset utf-8
 
 # prepare index.php for production use
