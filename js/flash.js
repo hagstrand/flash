@@ -127,7 +127,7 @@ voyc.Flash.prototype.load = function() {
 	});
 
 	// ready to start
-	this.observer.publish(new voyc.Note('setup-complete', 'flash', {}));
+	this.observer.publish('setup-complete', 'flash', {});
 }
 
 /**

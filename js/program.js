@@ -81,12 +81,12 @@ Program.prototype.loadData = function(data) {
 		}
 	}
 
-	this.observer.publish(new voyc.Note('cards-loaded', 'program', {}));
+	this.observer.publish('cards-loaded', 'program', {});
 
-	this.observer.publish(new voyc.Note('program-ready', 'program', {
+	this.observer.publish('program-ready', 'program', {
 		features:this.features,
 		dir:this.dir
-	}));
+	});
 
 	this.stackChanged();
 }
@@ -152,9 +152,9 @@ Program.prototype.changeCardState = function(card, newState, direction, quiet) {
 
 Program.prototype.stackChanged = function() {
 	var stacks = this.drawStacks();
-	this.observer.publish(new voyc.Note('stackchange-complete', 'program', {
+	this.observer.publish('stackchange-complete', 'program', {
 		stacks:stacks
-	}));
+	});
 }
 
 Program.prototype.drawStacks = function() {
@@ -175,9 +175,9 @@ Program.prototype.changeDirection = function(note) {
 	else {
 		this.dir = (this.dir == Dir.FORWARD) ? Dir.REVERSE : Dir.FORWARD;
 	}
-	this.observer.publish(new voyc.Note('changedirection-complete', 'program', {
+	this.observer.publish('changedirection-complete', 'program', {
 		dir:this.dir
-	}));
+	});
 	
 	this.stackChanged();
 }

@@ -180,10 +180,10 @@ Desk.prototype = {
 		window.addEventListener('keyup', function(event) {
 			if (event.keyCode == 80) {  // p
 				if (self.isAutoPlay) {
-					self.observer.publish(new voyc.Note('autoplay-cancelled', 'desk', {}));
+					self.observer.publish('autoplay-cancelled', 'desk', {});
 				}
 				else {
-					self.observer.publish(new voyc.Note('autoplay-request', 'desk', {}));
+					self.observer.publish('autoplay-request', 'desk', {});
 				}
 			}
 		}, false);
@@ -213,7 +213,7 @@ Desk.prototype = {
 	},
 
 	toggleDir: function(dir) {
-		this.observer.publish(new voyc.Note('changedirection-request', 'desk', {dir:dir}));
+		this.observer.publish('changedirection-request', 'desk', {dir:dir});
 	},
 
 	onDirectionChange: function(note) {
@@ -301,17 +301,17 @@ Desk.prototype = {
 	onAnswer: function(answer) {
 		this.answer = answer; // true/false, right/wrong
 		this.clear();
-		this.observer.publish(new voyc.Note('answer', 'desk', {
+		this.observer.publish('answer', 'desk', {
 			card:this.card,
 			answer:answer
-		}));
+		});
 	},
 
 	onPromote: function(promote) {
-		this.observer.publish(new voyc.Note('promote-request', 'desk', {
+		this.observer.publish('promote-request', 'desk', {
 			card:this.card,
 			promote:promote,
-		}));
+		});
 	},
 
 	/* autoplay, for development testing */

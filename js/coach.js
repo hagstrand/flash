@@ -89,17 +89,17 @@ Coach.prototype = {
 
 		this.card = this.choose();
 		if (!this.card) {
-			this.observer.publish(new voyc.Note('program-completed','coach',{}));
+			this.observer.publish('program-completed','coach',{});
 			return;
 		}
 
 		var stacks = voyc.flash.program.drawStacks();
 
-		this.observer.publish(new voyc.Note('question','coach',{
+		this.observer.publish('question','coach',{
 				card:this.card,
 				nSession:this.nSession,
 				stacks:stacks,
-		}));
+		});
 	},
 
 	scoreAnswer: function(note) {
@@ -122,7 +122,7 @@ Coach.prototype = {
 	},
 
 	toggleDir: function() {
-		this.observer.publish(new voyc.Note('changedirection-request', 'coach', {dir:false}));
+		this.observer.publish('changedirection-request', 'coach', {dir:false});
 	},
 	onDirectionChange: function(note) {
 		this.dir = note.payload.dir;

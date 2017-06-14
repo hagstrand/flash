@@ -11,7 +11,6 @@ params = urllib.urlencode([
 	('code_url', 'http://flash.voyc.com/jslib/utils.js'),
 	('code_url', 'http://flash.voyc.com/jslib/dragger.js'),
 	('code_url', 'http://flash.voyc.com/jslib/observer.js'),
-	('code_url', 'http://flash.voyc.com/jslib/note.js'),
 	('code_url', 'http://flash.voyc.com/jslib/browserhistory.js'),
 	('code_url', 'http://flash.voyc.com/jslib/sketch.js'),
 	('code_url', 'http://flash.voyc.com/icon/icon.js'),
