@@ -42,8 +42,8 @@ function Coach() {
 		'isAutoPromote': true,
 		'promotePctWork': 90,
 		'promoteCntWork': 3,
-		'promotePctReview': 93,
-		'promoteCntReview': 30,
+		'promotePctReview': 90,
+		'promoteCntReview': 6,
 	}
 
 	this.observer = null;
