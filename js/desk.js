@@ -187,7 +187,6 @@ Desk.prototype = {
 				}
 			}
 		}, false);
-
 	},
 
 	attachFlashNoteHandlers: function() {
@@ -395,7 +394,14 @@ Desk.prototype = {
 		}
 
 		// setup select and drag-and-drop of cards the stacks
-		this.minimal.attachAll(voyc.$('stacks'));
+		this.minimal.attachDnd(voyc.$('stacks'), function(e,x,y,t) {
+			console.log(['callback ondrop in desk',e,x,y,t]);
+			var newstack = t.parentElement.id;
+			var cardid = t.firstChild.id;
+			var card = voyc.flash.program.cards[cardid];
+			var state = newstack.substr(5,1);
+			voyc.flash.program.changeCardState(card,state);
+		}, false);
 	},
 
 	// Coach is handling settings. Desk is displaying settings.
