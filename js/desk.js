@@ -166,13 +166,13 @@ Desk.prototype = {
 		this.cbfields = voyc.$('settings').querySelectorAll('input[type=checkbox]');
 		for (var i=0; i<this.cbfields.length; i++) {
 			this.cbfields[i].addEventListener('change', function(e) {
-				flash.coach.setting[e.target.id] = e.target.checked;
+				voyc.flash.coach.setting[e.target.id] = e.target.checked;
 			});
 		}
 		this.numfields = voyc.$('settings').querySelectorAll('input[type=number]');
 		for (var i=0; i<this.numfields.length; i++) {
 			this.numfields[i].addEventListener('change', function(e) {
-				flash.coach.setting[e.target.id] = e.target.value;
+				voyc.flash.coach.setting[e.target.id] = e.target.value;
 			});
 		}
 		
@@ -403,13 +403,13 @@ Desk.prototype = {
 		var setting;
 		for (var i=0; i<this.cbfields.length; i++) {
 			setting = this.cbfields[i].id;
-			voyc.$(setting).checked = flash.coach.setting[setting];
+			voyc.$(setting).checked = voyc.flash.coach.setting[setting];
 		}
 		for (var i=0; i<this.numfields.length; i++) {
 			setting = this.numfields[i].id;
-			voyc.$(setting).value = flash.coach.setting[setting];
+			voyc.$(setting).value = voyc.flash.coach.setting[setting];
 		}
-		var p = getAbsolutePosition(voyc.$('desk'));
+		var p = voyc.getAbsolutePosition(voyc.$('desk'));
 		var w = voyc.$('desk').offsetWidth;
 		voyc.$('settings').style.top = p.y + 'px';
 		voyc.$('settings').style.right = (p.x) + 'px';
