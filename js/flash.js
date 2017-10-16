@@ -153,7 +153,7 @@ voyc.Flash.prototype.onNav = function(pageid) {
 	// practice button
 	else if (pageid == 'practice') {
 		//document.title = title + ' ' + subjects[pageid].name + ' Practice';
-		//this.showPage('deskcontainer');
+		this.showPage('deskcontainer');
 		//flash.program.loadData(subjects[pageid]);
 	}
 
