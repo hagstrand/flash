@@ -195,6 +195,7 @@ voyc.Flash.prototype.showPage = function(pageid) {
 window.addEventListener('load', function(evt) {
 	voyc.flash = new voyc.Flash();
 	voyc.flash.load();
+	window.opener.postMessage('ack', '*');
 });
 
 /** 
