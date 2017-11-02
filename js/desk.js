@@ -393,11 +393,18 @@ Desk.prototype = {
 			}
 		}
 
-		// setup select and drag-and-drop of cards the stacks
+		// attach drop handler for stacks
+		// drop handler function has four parameters e,x,y,t
+		//     e - element id of dropped element
+		//     x,y - mouse coordinates of the dropped element
+		//     t - element id of drop target
 		this.minimal.attachDnd(voyc.$('stacks'), function(e,x,y,t) {
 			console.log(['callback ondrop in desk',e,x,y,t]);
 			var newstack = t.parentElement.id;
-			var cardid = t.firstChild.id;
+			if (t.tagName.toLowerCase() == 'li') {
+				newstack = t.parentElement.parentElement.id;
+			}
+			var cardid = e.id;
 			var card = voyc.flash.program.cards[cardid];
 			var state = newstack.substr(5,1);
 			voyc.flash.program.changeCardState(card,state);
