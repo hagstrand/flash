@@ -374,6 +374,7 @@ Desk.prototype = {
 
 	onProgramReady: function(note) {
 		voyc.$('program-name').innerHTML = note.payload.features.title;
+		this.translitEnabled = note.payload.features.translit;
 		if (!note.payload.features.reversible) {
 			voyc.hide('dirbuttons');
 		}

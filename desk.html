@@ -43,19 +43,19 @@
 
 
 				$('test-program-ready').addEventListener('click', function(event) {
-					flash.observer.publish(new Note('program-ready', 'tester', {
+					flash.observer.publish('program-ready', 'tester', {
 						name:'Spanish',
 						dir:'qa'
-					}));
+					});
 				}, false);
 				$('test-question').addEventListener('click', function(event) {
 					var c = new Card({i:8430,n:1894,a:'lotus', t:'ka-ma-la', q:'कमल'});
-					flash.observer.publish(new Note('question', 'tester', {
+					flash.observer.publish('question', 'tester', {
 						card:c,
-					}));
+					});
 				}, false);
 				$('test-change-direction').addEventListener('click', function(event) {
-					flash.observer.publish(new Note('changedirection-complete', 'tester', {}));
+					flash.observer.publish('changedirection-complete', 'tester', {});
 				}, false);
 			});
 		</script>
