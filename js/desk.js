@@ -325,7 +325,8 @@ Desk.prototype = {
 	},
 	autoScore: function() {
 		// simulated probability of answering correctly increases with every asking of the question
-		var probability = [.30, .40, .50, .60, .70, .80, .90];
+		//var probability = [.30, .40, .50, .60, .70, .80, .90];
+		var probability = [.50, .70, .90];
 		var dir = (this.reverse) ? 'aq' : 'qa';
 		var probIndex = Math.min(this.card.getAcnt(dir), probability.length-1);
 		var probabilityTrue = probability[probIndex];

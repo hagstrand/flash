@@ -40,7 +40,7 @@ function Coach() {
 		'maxSizeReview': 10,
 
 		'isAutoPromote': true,
-		'promotePctWork': 90,
+		'promotePctWork': 80,
 		'promoteCntWork': 3,
 		'promotePctReview': 90,
 		'promoteCntReview': 6,
@@ -127,8 +127,10 @@ Coach.prototype = {
 	onDirectionChange: function(note) {
 		this.dir = note.payload.dir;
 		this.nDir = 0;
-		this.pull();
-		this.nextQuestion();
+		if (!voyc.flash.desk.isAutoPlay) {
+			this.pull();
+			this.nextQuestion();
+		}
 	},
 
 	// algorithm: choose
