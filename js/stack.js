@@ -8,7 +8,7 @@
 function Stack(state, dir) {
 	this.state = state;
 	this.dir = dir;
-	this.owner = voyc.flash.program;
+	this.deck = voyc.flash.program.cards;
 	this.set = [];	// an array of ids
 	this.ndx = -1;  // used only by current() and nextSequential()
 	this.avgPct = 0;
@@ -27,7 +27,7 @@ Stack.prototype = {
 			this.ndx = 0;
 		}
 		var id = this.set[this.ndx];
-		var card = this.owner.cards[id];
+		var card = this.deck[id];
 		return card;
 	},
 
@@ -40,7 +40,7 @@ Stack.prototype = {
 			this.ndx = 0;
 		}
 		var id = this.set[this.ndx];
-		var card = this.owner.cards[id];
+		var card = this.deck[id];
 		return card;
 	},
 
@@ -74,7 +74,7 @@ Stack.prototype = {
 
 		// if one card in the stack has a zero acnt, choose it
 		for (var ndx=0; ndx<this.set.length; ndx++) {
-			var card = this.owner.cards[this.set[ndx]];
+			var card = this.deck[this.set[ndx]];
 			if (card.getAcnt(this.dir) <= 0) {
 				return card;
 			}
@@ -84,14 +84,14 @@ Stack.prototype = {
 		var sortable = [];
 		for (var ndx=0; ndx<this.set.length; ndx++) {
 			//sortable.push({ndx:ndx, id:this.set[ndx]});
-			var card = this.owner.cards[this.set[ndx]];
+			var card = this.deck[this.set[ndx]];
 			sortable.push({ndx:ndx, id:this.set[ndx], seq:card.seq, z:card.getZ(this.dir)});
 		}
 
 		// order it by z ascending
 		var self = this;
 		sortable.sort(function(a,b) {
-			return self.owner.cards[a.id].getZ(self.dir) - self.owner.cards[b.id].getZ(self.dir);
+			return self.deck[a.id].getZ(self.dir) - self.deck[b.id].getZ(self.dir);
 		});
 
 		// remove the most recently used members (highest z)
@@ -113,7 +113,7 @@ Stack.prototype = {
 		var o = sortable[n];
 		this.ndx = o.ndx;
 		var id = o.id;
-		var card = this.owner.cards[id];
+		var card = this.deck[id];
 		return card;
 	},
 
@@ -123,7 +123,7 @@ Stack.prototype = {
 		var len = Math.min(this.getLength(), 10);
 		for (var ndx=0; ndx<len; ndx++) {
 			id = this.set[ndx];
-			card = this.owner.cards[id];
+			card = this.deck[id];
 			s += card.toString(this.dir) + "<br/>";
 		}
 		//var leftover = this.getLength() - len;
@@ -137,7 +137,7 @@ Stack.prototype = {
 		var id,card;
 		for (var ndx=0; ndx<this.set.length; ndx++) {
 			id = this.set[ndx];
-			card = this.owner.cards[id];
+			card = this.deck[id];
 			if (card.isPending()) {
 				if (prevOk) {
 					card.setClean();
@@ -161,7 +161,7 @@ Stack.prototype = {
 		var len = Math.min(this.getLength(), 100);
 		for (var ndx=0; ndx<len; ndx++) {
 			id = this.set[ndx];
-			card = this.owner.cards[id];
+			card = this.deck[id];
 			s += '<li id="'+id+'">' + card.drawStack(this.dir) + '</li>';
 		}
 		s += '</ul>';
@@ -174,7 +174,7 @@ Stack.prototype = {
 		var id,card;
 		for (var ndx=0; ndx<this.set.length; ndx++) {
 			id = this.set[ndx];
-			card = this.owner.cards[id];
+			card = this.deck[id];
 			var acnt = card.getAcnt(dir);
 			var pct = card.getPct(dir);
 			totCnt++;

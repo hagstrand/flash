@@ -55,6 +55,8 @@ Actor = {
 	FLASH: 'f'
 }
 
+/*****************************************************/
+
 /**
 	class Flash
 	@constructor
@@ -65,15 +67,16 @@ voyc.Flash = function() {
 	// is singleton
 	if (voyc.Flash._instance) return voyc.Flash._instance;
 	else voyc.Flash._instance = this;
-	
+
 	this.observer = null;
 	this.cache = [];
 }
 
-voyc.Flash.prototype.load = function() {
+voyc.Flash.prototype.onLoad = function() {
 	console.log('onload');
-
 	voyc.flash.title = 'Flash';
+
+	// rewrite
 	voyc.flash.strings = {};
 	voyc.flash.strings[Action.PROGRAM_READY] = 'program-ready',
 	voyc.flash.strings[Action.QUESTION] = 'question',
@@ -88,6 +91,7 @@ voyc.Flash.prototype.load = function() {
 	voyc.flash.strings[Actor.PROGRAM] = 'program',
 	voyc.flash.strings[Actor.FLASH] = 'flash'
 
+	// model
 	voyc.flash.coach = new Coach();
 	voyc.flash.program = new Program();  // : creates Sets of Cards
 
@@ -99,9 +103,12 @@ voyc.Flash.prototype.load = function() {
 	this.observer = voyc.flash.observer = new voyc.Observer();
 
 	// run setups
+	// inconsistency:
+	//     program and coach setup attach observer events
+	//     desk setup draws the screen
+	voyc.flash.program.setup(this.observer);
 	voyc.flash.desk.setup(voyc.$('deskcontainer'), this.observer);  // newer version of view
 	voyc.flash.coach.setup(this.observer);
-	voyc.flash.program.setup(this.observer);
 
 	// attach nav buttons
 	var elems = document.querySelectorAll('[nav]');
@@ -121,13 +128,15 @@ voyc.Flash.prototype.load = function() {
 	// initialize form with default custom cards
 	voyc.$('custominput').value = 'hola, hello;\nadios, goodbye;\nlapiz, pencil;\nestudiar, study;\nla madre, the mother;\nel padre, the father;';
 
-	// attach practice button handler
-	voyc.$('practice').addEventListener('click', function(evt) {
-		practicePage(evt);
-	});
-
 	// ready to start
+	// inconsistency:
+	//     this should say onload-complete
 	this.observer.publish('setup-complete', 'flash', {});
+
+	// acknowledge opener
+	if (window.opener) {
+		window.opener.postMessage('ack', '*');
+	}
 }
 
 /**
@@ -137,7 +146,6 @@ voyc.Flash.prototype.load = function() {
 		3. on startup.  pageid may be included in a bookmarked url.
 */
 voyc.Flash.prototype.onNav = function(pageid) {
-
 	// home page
 	if (!pageid) {
 		document.title = voyc.flash.title;
@@ -152,9 +160,7 @@ voyc.Flash.prototype.onNav = function(pageid) {
 	
 	// practice button
 	else if (pageid == 'practice') {
-		//document.title = title + ' ' + subjects[pageid].name + ' Practice';
 		this.showPage('deskcontainer');
-		//flash.program.loadData(subjects[pageid]);
 	}
 
 	// a subject page
@@ -164,6 +170,7 @@ voyc.Flash.prototype.onNav = function(pageid) {
 	}
 }
 
+// subroutine called from onNav
 voyc.Flash.prototype.loadScript = function(pageid) {
 	if (pageid in this.cache) {
 		window['onScriptLoaded'](this.cache[pageid]);
@@ -174,6 +181,7 @@ voyc.Flash.prototype.loadScript = function(pageid) {
 	}
 }
 
+// subroutine called from onNav
 voyc.Flash.prototype.showPage = function(pageid) {
 	var pageids = [
 		'home',
@@ -191,43 +199,11 @@ voyc.Flash.prototype.showPage = function(pageid) {
 	}
 }
 
-// global onload handler
+// startup
 window.addEventListener('load', function(evt) {
 	voyc.flash = new voyc.Flash();
-	voyc.flash.load();
-	window.opener.postMessage('ack', '*');
+	voyc.flash.onLoad();
 });
-
-/** 
-	External data comes in from these places:
-
-	1. onScriptLoaded(subject data) - from pages/*.js
-		flash.js switches the page and then passes data to Program object
-	
-	2. onLoadData(data) - from and external windows such as Sanskrit Keyboard
-		postMessage: window.addEventListener("message", function(e) {
-		flash.js reads the data to generate a new page and then passes data to Program object
-
-	3. from getCards data service
-		directly handled by Program object
-
-	4. when practice button is clicked, 
-		a new data structure is built
-		this is not external, but uses the same data structure as incoming external data
-
-	Data Portal:
-		program.loadData(data)
-		Card(quest) constructor
-
-	The incoming data object is external to the closure compiler,
-	and therefore references to it must use brackets-quoted-string notation.
-	
-	We first pass the data object to program.loadData().
-	Here the data is pulled out and loaded into internal objects,
-	and the original external data object is discarded.
-	
-	The internal objects are then accessed by dot-notation.
-*/
 
 // handle incoming postmessage from external window
 window.addEventListener("message", function(e) {
@@ -236,7 +212,8 @@ window.addEventListener("message", function(e) {
 	(new voyc.BrowserHistory()).nav(e.data['name']);
 }, false);
 
-// handle incoming data from pages/*.js loaded dynamically
+// handle incoming data from pages/*.js loaded dynamically 
+// when user clicks on dataset listed on flash homepage
 window['onScriptLoaded'] = function(data) {
 	voyc.flash.program.loadData(data);
 	document.title = voyc.flash.title + ' ' + data['title'];

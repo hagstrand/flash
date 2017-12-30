@@ -44,6 +44,9 @@ Program.prototype.setup = function(observer) {
 	this.observer.subscribe('changedirection-request', 'program', function(note) {
 		self.changeDirection(note);
 	});
+	this.observer.subscribe('setup-complete', 'program', function(note) {
+		self.restoreStacks(note);
+	});
 }
 
 // receive external data
@@ -155,6 +158,59 @@ Program.prototype.stackChanged = function() {
 	this.observer.publish('stackchange-complete', 'program', {
 		stacks:stacks
 	});
+	this.saveStacks();
+}
+
+Program.prototype.saveStacks = function() {
+	localStorage.setItem('stacks', JSON.stringify(voyc.clone(this.stacks)));
+	localStorage.setItem('deck', JSON.stringify(voyc.clone(this.cards)));
+	localStorage.setItem('features', JSON.stringify(voyc.clone(this.features)));
+}
+
+Program.prototype.restoreStacks = function() {
+	//localStorage.removeItem('stacks');
+	var stacks = JSON.parse(localStorage.getItem('stacks'));
+	if (stacks) {
+		console.log("continue previous session");
+		this.initStacks();
+		this.features = JSON.parse(localStorage.getItem('features'));
+		var cards = JSON.parse(localStorage.getItem('deck'));
+		for (var ndx in cards) {
+			this.cards[ndx] = new Card();
+			this.cards[ndx].id = cards[ndx].id;
+			this.cards[ndx].seq = cards[ndx].seq;
+			this.cards[ndx].foreign = cards[ndx].foreign;
+			this.cards[ndx].native = cards[ndx].native;
+			this.cards[ndx].translit = cards[ndx].translit;
+			this.cards[ndx].audiourl = cards[ndx].audiourl;
+			this.cards[ndx].qa  = voyc.clone(cards[ndx].qa);
+			this.cards[ndx].aq  = voyc.clone(cards[ndx].aq);
+			this.cards[ndx].io = 'c';
+		}
+
+		for (var state, st=0; st<Card.allStates.length; st++) {
+			state = Card.allStates[st];
+			this.stacks[Dir.REVERSE][state].deck   = voyc.flash.program.cards;
+			this.stacks[Dir.REVERSE][state].set    = voyc.clone(stacks[Dir.REVERSE][state].set);
+			this.stacks[Dir.REVERSE][state].ndx    = stacks[Dir.REVERSE][state].ndx;
+			this.stacks[Dir.REVERSE][state].avgPct = stacks[Dir.REVERSE][state].avgPct;
+			this.stacks[Dir.FORWARD][state].deck   = voyc.flash.program.cards;
+			this.stacks[Dir.FORWARD][state].set    = voyc.clone(stacks[Dir.FORWARD][state].set);
+			this.stacks[Dir.FORWARD][state].ndx    = stacks[Dir.FORWARD][state].ndx;
+			this.stacks[Dir.FORWARD][state].avgPct = stacks[Dir.FORWARD][state].avgPct;
+		}
+
+		this.observer.publish('cards-loaded', 'program', {});
+
+		this.observer.publish('program-ready', 'program', {
+			features:this.features,
+			dir:this.dir
+		});
+
+		this.stackChanged();
+
+		(new voyc.BrowserHistory()).nav('practice');
+	}
 }
 
 Program.prototype.drawStacks = function() {

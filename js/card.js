@@ -6,34 +6,66 @@
  */
 
 function Card(quest) {
-	// The input quest is external data.
-	this.id = quest['i'] || Card.id++;      // id
-	this.seq = quest['n'] || Card.seq++;     // sequence number
-	this.foreign = quest['q']; // question text (foreign language)
-	this.native = quest['a'];  // answer text (native language)
-	this.translit = quest['t'];
-	this.audiourl = quest['audiourl'];
+	if (quest) {
+		// The input quest is external data.
+		this.id = quest['i'] || Card.id++;      // id
+		this.seq = quest['n'] || Card.seq++;     // sequence number
+		this.foreign = quest['q']; // question text (foreign language)
+		this.native = quest['a'];  // answer text (native language)
+		this.translit = quest['t'];
+		this.audiourl = quest['audiourl'];
 
-	this['qa'] = {
-		state: quest['qas'] || 'u',    // state
-		aCnt: quest['qaa'] || 0,  // count asked
-		cCnt: quest['qac'] || 0,  // count correct
-		pct: 0,					// percent correct
-		recent: null,      // The 5 most recent answers.  A 5-byte array.  Each byte is empty, 0, or 1.
-		z: 0,              // nSession of last time this question was displayed
-	};
-	this['aq'] = {
-		state: quest['aqs'] || 'u',
-		aCnt: quest['aqa'] || 0,
-		cCnt: quest['aqc'] || 0,
-		pct: 0,
-		recent: null,
-		z:0
-	};
+		this['qa'] = {
+			state: quest['qas'] || 'u',    // state
+			aCnt: quest['qaa'] || 0,  // count asked
+			cCnt: quest['qac'] || 0,  // count correct
+			pct: 0,					// percent correct
+			recent: null,      // The 5 most recent answers.  A 5-byte array.  Each byte is empty, 0, or 1.
+			z: 0,              // nSession of last time this question was displayed
+		};
+		this['aq'] = {
+			state: quest['aqs'] || 'u',
+			aCnt: quest['aqa'] || 0,
+			cCnt: quest['aqc'] || 0,
+			pct: 0,
+			recent: null,
+			z:0
+		};
 
-	this.io = 'c';
-	this.clearRecent('qa');
-	this.clearRecent('aq');
+		this.io = 'c';
+		this.clearRecent('qa');
+		this.clearRecent('aq');
+	}
+	else {
+		// The input quest is external data.
+		this.id = Card.id++;    // id
+		this.seq = Card.seq++;  // sequence number
+		this.foreign = '';      // question text (foreign language)
+		this.native = '';       // answer text (native language)
+		this.translit = '';     // transliteration
+		this.audiourl = '';     // url of audio file
+
+		this['qa'] = {
+			state: 'u',    // state
+			aCnt: 0,       // count asked
+			cCnt: 0,       // count correct
+			pct:  0,       // percent correct
+			recent: null,  // The 5 most recent answers.  A 5-byte array.  Each byte is empty, 0, or 1.
+			z: 0,          // nSession of last time this question was displayed
+		};
+		this['aq'] = {
+			state: 'u',
+			aCnt: 0,
+			cCnt: 0,
+			pct:  0,
+			recent: null,
+			z:0
+		};
+
+		this.io = 'c';
+		this.clearRecent('qa');
+		this.clearRecent('aq');
+	}
 }
 
 Card.id = 1;
