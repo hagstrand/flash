@@ -72,6 +72,34 @@ voyc.Flash = function() {
 	this.cache = [];
 }
 
+voyc.Flash.prototype.makeDeck = function(custominput) {
+	var customdata = {
+		name:'custom',
+		title:'Custom',
+		reversible:true,
+		language:false,
+		sketch:false,
+		translit:false,
+		audio:false,
+		db: false,
+		cards: [
+			//{q:'China', a:'Beijing'},
+		]
+	};
+	
+	var a = custominput.split('\n');
+	var b = [], d = {};
+	for (i in a) {
+		b = a[i].split(';');
+		d = {
+			q: b[0],
+			a: b[1]
+		}
+		customdata.cards.push(d);
+	}
+	return customdata;
+}
+
 voyc.Flash.prototype.onLoad = function() {
 	console.log('onload');
 	voyc.flash.title = 'Flash';
@@ -126,8 +154,16 @@ voyc.Flash.prototype.onLoad = function() {
 	});
 
 	// initialize form with default custom cards
-	voyc.$('custominput').value = 'hola, hello;\nadios, goodbye;\nlapiz, pencil;\nestudiar, study;\nla madre, the mother;\nel padre, the father;';
+	voyc.$('custominput').value = 'hola;hello\nadios;goodbye\nlapiz;pencil\nestudiar;study\nla madre;the mother\nel padre;the father';
 
+	// attach custom practice button		
+	voyc.$('custompractice').addEventListener('click', function(e) {
+		var customdata = voyc.flash.makeDeck(voyc.$('custominput').value);
+		window['onScriptLoaded'](customdata);
+		(new voyc.BrowserHistory()).nav('practice')
+	});
+	
+	
 	// ready to start
 	// inconsistency:
 	//     this should say onload-complete

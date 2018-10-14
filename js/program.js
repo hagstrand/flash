@@ -165,6 +165,12 @@ Program.prototype.saveStacks = function() {
 	localStorage.setItem('stacks', JSON.stringify(voyc.clone(this.stacks)));
 	localStorage.setItem('deck', JSON.stringify(voyc.clone(this.cards)));
 	localStorage.setItem('features', JSON.stringify(voyc.clone(this.features)));
+
+	// acknowledge opener
+	if (window.opener) {
+		var stacks = JSON.stringify(voyc.clone(this.stacks));
+		window.opener.postMessage(stacks, '*');
+	}
 }
 
 Program.prototype.restoreStacks = function() {
