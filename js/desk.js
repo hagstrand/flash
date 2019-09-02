@@ -29,85 +29,92 @@ Desk.strings = {
 	'program-name': 'Flash',
 }
 
-Desk.html = ""+
-	"<div id='desk' class='box ylo'>"+
-		"<div class='dr'>"+
-			"<table>"+
-				"<tr>"+
-					"<td id='program-name' class='title tleft'>$4</td>"+
-					"<td class='tright'>"+
-						"<div id='dirbuttons'>"+
-							"<input hidden id='dir-qa-btn' type='button' class='anchor' value='$1' />"+
-							"<input hidden id='dir-aq-btn' type='button' class='anchor' value='$2' />"+
-						"</div>"+
-						"<icon type='draw' name='gear' open='settings'></icon>"+
-					"</td>"+
-				"</tr>"+
-			"</table>"+
-		"</div>"+
-		"<div class='dr'>"+
-			"<div class='bigfield' id='question'>&nbsp;</div>"+
-		"</div>"+
-		"<div class='dr'>"+
-			"<table>"+
-				"<tr>"+
-					"<td class='wid20p'>"+
-					"</td>"+
-					"<td class='wid60p'>"+
-						"<div id='translit' class='tcenter'>&nbsp;</div>"+
-					"</td>"+
-					"<td class='tright wid20p'>"+
-						"<icon class=big name='audio'    id='audio-btn' ></icon>"+
-						"<icon class=big name='pencildn' id='sketch-btn'></icon>"+
-					"</td>"+
-				"</tr>"+
-			"</table>"+
-		"</div>"+
-		"<div class='dr'>"+
-			"<div id='answer-container'>"+
-				"<div class='bigfield' id='answer'>&nbsp;</div>"+
-				"<canvas hidden id='sketchcanvas' class='accent'></canvas>"+
-			"</div>"+
-		"</div>"+
-		"<div class='dr'>"+
-			"<div class='tcenter'>"+
-				"<div id='show-answer-btns'>"+
-					"<input id='show-answer-btn' type='button' value='Show answer' />"+
-				"</div>"+
-				"<div hidden id='right-wrong-btns'>"+
-					"<input id='wrong-btn' type='button' value='Wrong' />"+
-					"<input id='right-btn' type='button' value='Right' />"+
-				"</div>"+
-			"</div>"+
-		"</div>"+
-		"<h5 id=stackexpander expand='stacks' class='tleft expander'>Stacks</h5>"+
-		"<div id='stacks'>"+
-			"<div draglist droplist class='stack panel list grn' id='stacku'><h3>Untried</h3></div>"+
-			"<div draglist drop class='stack panel list grn' id='stackw'><h3>Work</h3><ul></ul></div>"+
-			"<div draglist drop class='stack panel list grn' id='stackr'><h3>Review</h3><ul></ul></div>"+
-			"<div draglist drop class='stack panel list grn' id='stackm'><h3>Mastered</h3><ul></ul></div>"+
-		"</div>"+
-	"</div>"+
-	"<form initially hidden id='settings' class='panel popup dropdown blu'>"+
-		"<div close='settings' class='closex'>&times;</div>"+
-		"<h3>Settings</h3>"+
-		"<table>"+
-			"<tr><td colspan='2'><input type='checkbox' id='isAutoDir' checked /><label for='isAutoDir'>isAutoDir</label></td></tr>"+
-			"<tr><td>autoDirNth</td><td class='tright'><input type='number' id='autoDirNth'   value='0' /></td></tr>"+
-			"<tr><td colspan='2'><input type='checkbox' id='isAutoChoose' checked /><label for='isAutoChoose'>isAutoChoose</label></td></tr>"+
-			"<tr><td>choosePctReview</td><td class='tright'><input type='number' id='choosePctReview' value='0' /></td></tr>"+
-			"<tr><td colspan='2'><input type='checkbox' id='isAutoPull' checked /><label for='isAutoPull'>isAutoPull</label></td></tr>"+
-			"<tr><td>minAvgPctWork</td><td class='tright'><input type='number' id='minAvgPctWork' value='0' /></td></tr>"+
-			"<tr><td>minSizeWork</td><td class='tright'><input type='number' id='minSizeWork' value='0' /></td></tr>"+
-			"<tr><td>maxSizeWork</td><td class='tright'><input type='number' id='maxSizeWork' value='0' /></td></tr>"+
-			"<tr><td>maxSizeReview</td><td class='tright'><input type='number' id='maxSizeReview' value='0' /></td></tr>"+
-			"<tr><td colspan='2'><input type='checkbox' id='isAutoPromote' checked /><label for='isAutoPromote'>isAutoPromote</label></td></tr>"+
-			"<tr><td>promotePctWork  </td><td class='tright'><input type='number' id='promotePctWork' value='0' /></td></tr>"+
-			"<tr><td>promoteCntWork  </td><td class='tright'><input type='number' id='promoteCntWork' value='0' /></td></tr>"+
-			"<tr><td>promotePctReview</td><td class='tright'><input type='number' id='promotePctReview' value='0' /></td></tr>"+
-			"<tr><td>promoteCntReview</td><td class='tright'><input type='number' id='promoteCntReview' value='0' /></td></tr>"+
-		"</table>"+
-	"</form>";
+Desk.html = `
+<div id='desk' class='box ylo'>
+	<div class='dr'>
+		<table>
+			<tr>
+				<td id='program-name' class='title tleft'>$4</td>
+				<td class='tright'>
+					<div id='sequencebuttons'>
+						<input hidden id='sequence-sequential-btn'  type='button' class='anchor' value='Sequential' />
+						<input hidden id='sequence-shuffled-btn'    type='button' class='anchor' value='Shuffle' />
+						<input hidden id='sequence-elimination-btn' type='button' class='anchor' value='Elimination' />
+						<input        id='sequence-progressive-btn' type='button' class='anchor' value='Progressive' />
+					</div>
+					<div id='dirbuttons'>
+						<input hidden id='dir-qa-btn' type='button' class='anchor' value='$1' />
+						<input hidden id='dir-aq-btn' type='button' class='anchor' value='$2' />
+					</div>
+					<icon type='draw' name='gear' open='settings'></icon>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class='dr'>
+		<div class='bigfield' id='question'>&nbsp;</div>
+	</div>
+	<div class='dr'>
+		<table>
+			<tr>
+				<td class='wid20p'>
+				</td>
+				<td class='wid60p'>
+					<div id='translit' class='tcenter'>&nbsp;</div>
+				</td>
+				<td class='tright wid20p'>
+					<icon class=big name='audio'    id='audio-btn' ></icon>
+					<icon class=big name='pencildn' id='sketch-btn'></icon>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class='dr'>
+		<div id='answer-container'>
+			<div class='bigfield' id='answer'>&nbsp;</div>
+			<canvas hidden id='sketchcanvas' class='accent'></canvas>
+		</div>
+	</div>
+	<div class='dr'>
+		<div class='tcenter'>
+			<div id='show-answer-btns'>
+				<input id='show-answer-btn' type='button' value='Show answer' />
+			</div>
+			<div hidden id='right-wrong-btns'>
+				<input id='wrong-btn' type='button' value='Wrong' />
+				<input id='right-btn' type='button' value='Right' />
+			</div>
+		</div>
+	</div>
+	<h5 id=stackexpander expand='stacks' class='tleft expander'>Stacks</h5>
+	<div id='stacks'>
+		<div draglist droplist class='stack panel list grn' id='stacku'><h3>Untried</h3></div>
+		<div draglist drop class='stack panel list grn' id='stackw'><h3>Work</h3><ul></ul></div>
+		<div draglist drop class='stack panel list grn' id='stackr'><h3>Review</h3><ul></ul></div>
+		<div draglist drop class='stack panel list grn' id='stackm'><h3>Mastered</h3><ul></ul></div>
+	</div>
+</div>
+<form initially hidden id='settings' class='panel popup dropdown blu'>
+	<div close='settings' class='closex'>&times;</div>
+	<h3>Settings</h3>
+	<table>
+		<tr><td colspan='2'><input type='checkbox' id='isAutoDir' checked /><label for='isAutoDir'>isAutoDir</label></td></tr>
+		<tr><td>autoDirNth</td><td class='tright'><input type='number' id='autoDirNth'   value='0' /></td></tr>
+		<tr><td colspan='2'><input type='checkbox' id='isAutoChoose' checked /><label for='isAutoChoose'>isAutoChoose</label></td></tr>
+		<tr><td>choosePctReview</td><td class='tright'><input type='number' id='choosePctReview' value='0' /></td></tr>
+		<tr><td colspan='2'><input type='checkbox' id='isAutoPull' checked /><label for='isAutoPull'>isAutoPull</label></td></tr>
+		<tr><td>minAvgPctWork</td><td class='tright'><input type='number' id='minAvgPctWork' value='0' /></td></tr>
+		<tr><td>minSizeWork</td><td class='tright'><input type='number' id='minSizeWork' value='0' /></td></tr>
+		<tr><td>maxSizeWork</td><td class='tright'><input type='number' id='maxSizeWork' value='0' /></td></tr>
+		<tr><td>maxSizeReview</td><td class='tright'><input type='number' id='maxSizeReview' value='0' /></td></tr>
+		<tr><td colspan='2'><input type='checkbox' id='isAutoPromote' checked /><label for='isAutoPromote'>isAutoPromote</label></td></tr>
+		<tr><td>promotePctWork  </td><td class='tright'><input type='number' id='promotePctWork' value='0' /></td></tr>
+		<tr><td>promoteCntWork  </td><td class='tright'><input type='number' id='promoteCntWork' value='0' /></td></tr>
+		<tr><td>promotePctReview</td><td class='tright'><input type='number' id='promotePctReview' value='0' /></td></tr>
+		<tr><td>promoteCntReview</td><td class='tright'><input type='number' id='promoteCntReview' value='0' /></td></tr>
+	</table>
+</form>
+`;
 
 Desk.prototype = {
 	setup: function(container, observer) {
