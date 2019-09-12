@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python2.4
 
 import httplib, urllib, sys
 
@@ -23,8 +23,8 @@ params = urllib.urlencode([
 	('code_url', 'http://flash.voyc.com/js/str.js'),
 	('code_url', 'http://flash.voyc.com/js/card.js'),
 	('code_url', 'http://flash.voyc.com/js/stack.js'),
-	('compilation_level', 'ADVANCED_OPTIMIZATIONS'),
-	('language', 'ECMASCRIPT5'),
+	('compilation_level', 'ADVANCED_OPTIMIZATIONS'),  # menu does not appear
+	('language', 'ECMASCRIPT6'),
 	('output_format', 'text'),
 	('output_info', 'compiled_code'),
 	('formatting', 'pretty_print'),
