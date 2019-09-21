@@ -27,6 +27,7 @@ function Coach() {
 	else Coach._instance = this;
 
 	this.setting = {
+		'isAutoScore': true,
 		'isAutoDir': true,
 		'autoDirNth': 30,
 

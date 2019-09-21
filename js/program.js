@@ -20,6 +20,7 @@ function Program() {
 		lang       : 'sa',  // two-char language code (only for language)
 		sketch     : false, // true/false
 		translit   : false, // true/false (only for language)
+		keyinput   : false, // true/false (accept keyboard input from student)
 		audio      : false, // true/false
 		db         : false, // true/false
 	}
@@ -58,6 +59,7 @@ Program.prototype.loadData = function(data) {
 	this.features.language   = data['language'] || false;
 	this.features.sketch     = data['sketch'] || false;
 	this.features.translit   = data['translit'] || false;
+	this.features.keyinput   = data['keyinput'] || false;
 	this.features.audio      = data['audio'] || false;
 	this.features.db         = data['db'] || false;
 
@@ -188,6 +190,7 @@ Program.prototype.restoreStacks = function() {
 			this.cards[ndx].foreign = cards[ndx].foreign;
 			this.cards[ndx].native = cards[ndx].native;
 			this.cards[ndx].translit = cards[ndx].translit;
+			this.cards[ndx].keyinput = cards[ndx].keyinput;
 			this.cards[ndx].audiourl = cards[ndx].audiourl;
 			this.cards[ndx].qa  = voyc.clone(cards[ndx].qa);
 			this.cards[ndx].aq  = voyc.clone(cards[ndx].aq);

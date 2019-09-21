@@ -82,6 +82,7 @@ voyc.Flash.prototype.makeDeck = function(custominput) {
 		translit:false,
 		audio:false,
 		db: false,
+		keyinput:true,
 		cards: [
 			//{q:'China', a:'Beijing'},
 		]
@@ -90,12 +91,16 @@ voyc.Flash.prototype.makeDeck = function(custominput) {
 	var a = custominput.split('\n');
 	var b = [], d = {};
 	for (i in a) {
-		b = a[i].split(';');
+		b = a[i].split(/[;\t]/);
 		d = {
 			q: b[0],
-			a: b[1]
+			a: b[1],
+			t: b[2]
 		}
 		customdata.cards.push(d);
+	}
+	if (d.t) {
+		customdata.translit = true;
 	}
 	return customdata;
 }

@@ -20,6 +20,7 @@ Desk = function() {
 	this.isAutoPlay = false;  // for development testing
 	this.minimal = null;
 	this.translitEnabled = false;
+	this.keyInputEnabled = false;
 }
 
 Desk.strings = {
@@ -78,6 +79,7 @@ Desk.html = `
 	<div class='dr'>
 		<div class='tcenter'>
 			<div id='show-answer-btns'>
+				<input id='answer-input' type='input' />
 				<input id='show-answer-btn' type='button' value='Show answer' />
 			</div>
 			<div hidden id='right-wrong-btns'>
@@ -98,6 +100,7 @@ Desk.html = `
 	<div close='settings' class='closex'>&times;</div>
 	<h3>Settings</h3>
 	<table>
+		<tr><td colspan='2'><input type='checkbox' id='isAutoScore' checked /><label for='isAutoScore'>isAutoScore</label></td></tr>
 		<tr><td colspan='2'><input type='checkbox' id='isAutoDir' checked /><label for='isAutoDir'>isAutoDir</label></td></tr>
 		<tr><td>autoDirNth</td><td class='tright'><input type='number' id='autoDirNth'   value='0' /></td></tr>
 		<tr><td colspan='2'><input type='checkbox' id='isAutoChoose' checked /><label for='isAutoChoose'>isAutoChoose</label></td></tr>
@@ -150,6 +153,10 @@ Desk.prototype = {
 
 		voyc.$('show-answer-btn').addEventListener('click',function(event) {
 			self.showAnswer();
+		});
+
+		voyc.$('answer-input').addEventListener('input',function(event) {
+			self.onCustomAnswer();
 		});
 
 		voyc.$('right-btn').addEventListener('click',function(event) {
@@ -247,6 +254,10 @@ Desk.prototype = {
 		voyc.$('translit').innerHTML = '&nbsp;';
 		voyc.$('right-wrong-btns').setAttribute('hidden', '');
 		voyc.$('show-answer-btns').removeAttribute('hidden');
+		if (this.keyInputEnabled) {
+			voyc.$('answer-input').value = '';
+			voyc.$('answer-input').focus();
+		}
 
 //		this.playSound(this.card.audio);
 // implement fx/playsound.html Sound object
@@ -300,7 +311,18 @@ Desk.prototype = {
 
 		if (this.isAutoPlay) {
 			var self = this;
-			setTimeout(function() {self.autoScore()}, 250);
+			setTimeout(function() {self.autoAnswer()}, 250);
+		}
+	},
+
+	onCustomAnswer: function() {
+		if (!this.card)
+			return;
+
+		var s = voyc.$('answer-input').value;
+		if (s == this.card.foreign) {
+			//this.onAnswer(true);
+			this.showAnswer();
 		}
 	},
 
@@ -330,7 +352,7 @@ Desk.prototype = {
 			}, 250);
 		}
 	},
-	autoScore: function() {
+	autoAnswer: function() {
 		// simulated probability of answering correctly increases with every asking of the question
 		//var probability = [.30, .40, .50, .60, .70, .80, .90];
 		var probability = [.50, .70, .90];
@@ -383,8 +405,15 @@ Desk.prototype = {
 	onProgramReady: function(note) {
 		voyc.$('program-name').innerHTML = note.payload.features.title;
 		this.translitEnabled = note.payload.features.translit;
+		this.keyInputEnabled = note.payload.features.keyinput;
 		if (!note.payload.features.reversible) {
 			voyc.hide('dirbuttons');
+		}
+		if (this.keyInputEnabled) {
+			voyc.show('answer-input');
+		}
+		else {
+			voyc.hide('answer-input');
 		}
 		this.onDirectionChange(note);
 	},
